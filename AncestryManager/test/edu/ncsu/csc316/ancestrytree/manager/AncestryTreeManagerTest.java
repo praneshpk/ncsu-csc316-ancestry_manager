@@ -8,15 +8,15 @@ public class AncestryTreeManagerTest {
 
 	@Test
 	public void testAncestryTreeManagerStringString() {
-		//fail("Not yet implemented");
+		AncestryTreeManager p = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
+		
 	}
 
 	@Test
 	public void testAncestryTreeManagerString() {
-		AncestryTreeManager m = new AncestryTreeManager("input/small-ahnentafel.txt");
-		assertEquals(m.getRelationship("Sally Poole"),"Sally Poole is Billy Smith's great-grandmother");
-		assertEquals(m.getRelationship("Billy Smith"),null);
-		//fail("Not yet implemented");
+		AncestryTreeManager a = new AncestryTreeManager("input/small-ahnentafel.txt");
+		assertEquals(a.getRelationship("Sally Poole"), "Sally Poole is Billy Smith's great-grandmother");
+		assertEquals(a.getRelationship("Billy Smith"), null);
 	}
 
 	@Test

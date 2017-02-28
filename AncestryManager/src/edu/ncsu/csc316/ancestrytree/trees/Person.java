@@ -1,4 +1,4 @@
-package edu.ncsu.csc316.ancestrytree.manager;
+package edu.ncsu.csc316.ancestrytree.trees;
 /**
  * The Person class has all the variables that define
  * a person in the AncestryTree

@@ -1,8 +1,8 @@
 package edu.ncsu.csc316.ancestrytree.trees;
 
-public class TraversalTree<E> implements Tree<E> {
+public class TraversalTree implements Tree {
 	/** The root TreeNode of the tree */
-	private TreeNode<E> root;
+	private TreeNode root;
 	/** The size of the tree */
 	private int size;
 	
@@ -10,22 +10,32 @@ public class TraversalTree<E> implements Tree<E> {
 	 * Creates the Tree Object
 	 * @param r the data of the root node
 	 */
-	public TraversalTree( E r ) {
-		root = new TreeNode<>(r, null);
+	public TraversalTree( Person r ) {
+		root = new TreeNode(r);
 		size = 1;
 	}
 	
-	public TreeNode<E> search(TreeNode<E> r, E data) {
+	/**
+	 * Creates the Tree Object given a root node and size
+	 * @param r the data of the root node
+	 * @param s size of the node
+	 */
+	public TraversalTree(TreeNode r, int s ) {
+		root = r;
+		size = s;
+	}
+	
+	public TreeNode search(TreeNode r, Person data) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public TreeNode<E> searchForMark(TreeNode<E> r) {
+	public TreeNode searchForMark(TreeNode r) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public DoubleList<E> getLevelOrder() {
+	public DoubleList getLevelOrder() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -34,9 +44,9 @@ public class TraversalTree<E> implements Tree<E> {
 	 * Returns the root node of the tree
 	 * @return root node
 	 */
-	public TreeNode<E> getRoot() { return root; }
+	public TreeNode getRoot() { return root; }
 
-	public TreeNode<E> get(int index) {
+	public TreeNode get(int index) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -53,11 +63,11 @@ public class TraversalTree<E> implements Tree<E> {
 	 */
 	public boolean isEmpty() { return size == 0; }
 
-	public void add(E data) {
+	public void add(Person data) {
 		// TODO Auto-generated method stub
 	}
 
-	public E search(E data) {
+	public Person search(Person data) {
 		// TODO Auto-generated method stub
 		return null;
 	}

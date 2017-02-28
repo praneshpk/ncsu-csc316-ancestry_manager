@@ -4,13 +4,13 @@ import java.util.NoSuchElementException;
 
 
 /**
- * The List abstract class contains the data structure that allows
+ * The LinkedList abstract class contains the data structure that allows
  * multi-purpose lists to be derived from
  * @author Pranesh Kamalakanthan
  *
  * @param <E> the type of data stored in the List
  */
-public abstract class List<E> {
+public abstract class LinkedList<E> {
 	
 	/**
 	 * The nested Node class acts as the data structure contained within List
@@ -116,6 +116,49 @@ public abstract class List<E> {
 	}
 	/** End nested ListIterator class */
 	
+	/**
+	 * The nested ReverseListIterator class maintains the functions and variables
+	 * to traverse the List in reverse
+	 * @author Pranesh Kamalakanthan
+	 *
+	 */
+	private class ReverseListIterator implements Iterator<E> {
+		/** Current Node of iterator */
+		private Node<E> curr;
+		
+		/** Current iterator position */
+		private int i;
+		
+		/**
+		 * Creates a new DoubleListIterator object
+		 */
+		public ReverseListIterator() {
+			curr = trailer.prev;
+			i = 0;
+		}
+		
+		/**
+		 * Checks if there is another Node in the List
+		 * @return true if there is another Node
+		 * 		   false if there is not
+		 */
+		public boolean hasNext() { return i < size; }
+		
+		/**
+		 * Traverses the list by one and returns the current Node data
+		 * @return curr.data
+		 */
+		public E next() {
+			if( !hasNext() ) throw new NoSuchElementException();
+			E e = curr.data;
+			curr = curr.prev;
+			i++;
+			return e;
+		}
+		
+	}
+	/** End nested ReverseListIterator class */
+	
 	
 	/** Header sentinel Node */
 	protected Node<E> header;
@@ -129,7 +172,7 @@ public abstract class List<E> {
 	/**
 	 * Creates a new List object
 	 */
-	public List() {
+	public LinkedList() {
 		header = new Node<>( null, null, null );
 		trailer = new Node<>( null, header, null );
 		header.setNext(trailer);
@@ -142,6 +185,12 @@ public abstract class List<E> {
 	public ListIterator iterator() { return new ListIterator(); }
 	
 	/**
+	 * Gets a new ReverseListIterator object
+	 * @return new ReverseListIterator object
+	 */
+	public ReverseListIterator riterator() { return new ReverseListIterator(); }
+	
+	/**
 	 * Gets the size of the list
 	 * @return size of the list
 	 */
@@ -152,5 +201,17 @@ public abstract class List<E> {
 	 * @return true if it is empty, false otherwise
 	 */
 	public boolean isEmpty() { return size == 0; }
+	
+	/**
+	 * Returns the list object information
+	 * @return the element list separated by spaces
+	 */
+	public String toString() {
+		String res = "";
+		Iterator<E> it = iterator();
+		while( it.hasNext() )
+			res += it.next() + " ";
+		return res;
+	}
 	
 }

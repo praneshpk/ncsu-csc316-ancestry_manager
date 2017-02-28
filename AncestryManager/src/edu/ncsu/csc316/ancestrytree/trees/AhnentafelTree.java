@@ -5,11 +5,10 @@ package edu.ncsu.csc316.ancestrytree.trees;
  * and the Ahnentefal-style tree
  * @author Pranesh Kamalakanthan
  *
- * @param <E> type of node used in Tree
  */
-public class AhnentafelTree<E> implements Tree<E> {
+public class AhnentafelTree implements Tree {
 	/** The root TreeNode of the tree */
-	private TreeNode<E> root;
+	private TreeNode root;
 	/** The size of the tree */
 	private int size;
 	
@@ -17,8 +16,8 @@ public class AhnentafelTree<E> implements Tree<E> {
 	 * Creates the Tree Object
 	 * @param r a sorted array containing E
 	 */
-	public AhnentafelTree( E r ) {
-		root = new TreeNode<>(r);
+	public AhnentafelTree( Person r ) {
+		root = new TreeNode(r);
 		size = 1;
 	}
 	/**
@@ -26,8 +25,8 @@ public class AhnentafelTree<E> implements Tree<E> {
 	 * @param data search data
 	 * @return data if found, null otherwise
 	 */
-	public E search(E data) {
-		TreeNode<E> res;
+	public Person search(Person data) {
+		TreeNode res;
 		if( (res = search(root, data)) != null )
 			return res.getData();
 		else
@@ -41,8 +40,8 @@ public class AhnentafelTree<E> implements Tree<E> {
 	 * @param data search data
 	 * @return returns the node if found, null otherwise
 	 */
-	private TreeNode<E> search(TreeNode<E> r, E data) {
-		TreeNode<E> res;
+	private TreeNode search(TreeNode r, Person data) {
+		TreeNode res;
 		if(r.getData().equals(data))
 			return r;
 		if(r.getLeft() != null)
@@ -59,8 +58,8 @@ public class AhnentafelTree<E> implements Tree<E> {
 	 * @param r node to start search from
 	 * @return marked TreeNode
 	 */
-	public TreeNode<E> searchForMark(TreeNode<E> r) {
-		TreeNode<E> res;
+	public TreeNode searchForMark(TreeNode r) {
+		TreeNode res;
 		if(r.isMarked())
 			return r;
 		if(r.getLeft() != null)
@@ -76,18 +75,18 @@ public class AhnentafelTree<E> implements Tree<E> {
 	 * Returns the tree in level order
 	 * @return a Queue of the tree in level order
 	 */
-	public DoubleList<E> getLevelOrder() {
-		Queue<TreeNode<E>> q = new Queue<>();
-		DoubleList<E> res = new DoubleList<>();
-		TreeNode<E> node = root;
+	public DoubleList<Person> getLevelOrder() {
+		Queue<TreeNode> q = new Queue<>();
+		DoubleList<Person> res = new DoubleList<>();
+		TreeNode node = root;
 		
 		while( node != null ) {
 			res.add(node.getData());
 			if(node.getLeft() != null )
-				q.enqueue(node.getLeft());
+				q.add(node.getLeft());
 			if(node.getRight() != null )
-				q.enqueue(node.getRight());
-			node = q.dequeue();
+				q.add(node.getRight());
+			node = q.remove();
 		}
 		return res;
 	}
@@ -96,25 +95,25 @@ public class AhnentafelTree<E> implements Tree<E> {
 	 * Returns the root node of the tree
 	 * @return root node
 	 */
-	public TreeNode<E> getRoot() { return root; }
+	public TreeNode getRoot() { return root; }
 	
 	/**
 	 * Returns the node at the given index
 	 * @param index position of node
 	 * @return the node at index
 	 */
-	public TreeNode<E> get( int index ) {
-		Queue< TreeNode<E> > q = new Queue<>();
-		TreeNode<E> node = root;
+	public TreeNode get( int index ) {
+		Queue< TreeNode > q = new Queue<>();
+		TreeNode node = root;
 		int i = 0;
 		while( node != null ) {
 			if( i++ == index )
 				return node;
 			if(node.getLeft() != null )
-				q.enqueue(node.getLeft());
+				q.add(node.getLeft());
 			if(node.getRight() != null )
-				q.enqueue(node.getRight());
-			node = q.dequeue();
+				q.add(node.getRight());
+			node = q.remove();
 		}
 		throw new IndexOutOfBoundsException();
 	}
@@ -135,7 +134,7 @@ public class AhnentafelTree<E> implements Tree<E> {
 	 * Creates a node with given data and adds it to tree
 	 * @param data given data
 	 */
-	public void add(E data) {
+	public void add(Person data) {
 		root = insert(root, data);
 		size++;
 	}
@@ -145,9 +144,9 @@ public class AhnentafelTree<E> implements Tree<E> {
 	 * @param data given data
 	 * @return root node
 	 */
-	private TreeNode<E> insert(TreeNode<E> r, E data) {
+	private TreeNode insert(TreeNode r, Person data) {
 		if(r == null)
-			return new TreeNode<E>(data);
+			return new TreeNode(data);
 		if( r.getLeft() == null )
 			r.setLeft( insert(r.getLeft(), data) );
 		else if( r.getRight() == null )

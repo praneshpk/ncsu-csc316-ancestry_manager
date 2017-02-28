@@ -1,38 +1,35 @@
 package edu.ncsu.csc316.ancestrytree.trees;
+
 /**
  * Contains all the functions and variables required for the
  * TreeNode class that is to be implemented in BinaryTree
  * @author Pranesh Kamalakanthan
  *
- * @param <T> type of data in TreeNode 
  */
-public class TreeNode<T> {
+public class TreeNode {
 	/** Data contained in node */
-	private T data;
+	private Person data;
 	
 	/** Parent node */
-	private TreeNode<T> parent;
+	private TreeNode parent;
 	
 	/** Left node */
-	private TreeNode<T> left;
+	private TreeNode left;
 	
 	/** Right node */
-	private TreeNode<T> right;
+	private TreeNode right;
 	
 	/** Children nodes */
-	private DoubleList<TreeNode<T>> children;
+	private DoubleList<TreeNode> children;
 	
 	/** Marked/unmarked */
 	private boolean marked;
 	
 	/**
-	 * Creates the TreeNode object for an Ahnentafel structure
+	 * Creates the TreeNode object
 	 * @param d data
-	 * @param p parent node
-	 * @param l left node
-	 * @param r right node
 	 */
-	public TreeNode(T d ) {
+	public TreeNode(Person d ) {
 		data = d;
 		parent = left = right = null;
 		children = null;
@@ -40,15 +37,16 @@ public class TreeNode<T> {
 	}
 	
 	/**
-	 * Creates the TreeNode object for a pre/postorder structure
+	 * Creates the TreeNode object with parent and children nodes
 	 * @param d data
 	 * @param p parent node
-	 * @param c children node list
+	 * @param c children nodes
 	 */
-	public TreeNode(T d, DoubleList<TreeNode<T>> c) {
+	public TreeNode(Person d, TreeNode p, DoubleList<TreeNode> c) {
 		data = d;
+		left = right = null;
+		parent = p;
 		children = c;
-		parent = left = right = null;
 		marked = false;
 	}
 	
@@ -67,60 +65,60 @@ public class TreeNode<T> {
 	 * Returns the data contained in node
 	 * @return data
 	 */
-	public T getData() { return data; }
+	public Person getData() { return data; }
 	
 	/**
 	 * Returns the parent node
 	 * @return parent
 	 */
-	public TreeNode<T> getParent() { return parent; }
+	public TreeNode getParent() { return parent; }
 	
 	/**
 	 * Returns the left node
 	 * @return left
 	 */
-	public TreeNode<T> getLeft() { return left; }
+	public TreeNode getLeft() { return left; }
 	
 	/**
 	 * Returns the right node
 	 * @return right
 	 */
-	public TreeNode<T> getRight() { return right; }
+	public TreeNode getRight() { return right; }
 	
 	/**
 	 * Returns the children nodes
 	 * @return children
 	 */
-	public DoubleList<TreeNode<T>> getChildren() { return children; }
+	public DoubleList<TreeNode> getChildren() { return children; }
 	
 	/**
 	 * Sets the data in node
 	 * @param d data
 	 */
-	public void setData( T d ) { data = d; }
+	public void setData( Person d ) { data = d; }
 	
 	/**
 	 * Sets the parent of node
 	 * @param p parent
 	 */
-	public void setParent(TreeNode<T> p) { parent = p; }
+	public void setParent(TreeNode p) { parent = p; }
 	
 	/**
 	 * Sets the left node
 	 * @param l left node
 	 */
-	public void setLeft(TreeNode<T> l) { left = l; }
+	public void setLeft(TreeNode l) { left = l; }
 	
 	/**
 	 * Sets the right node
 	 * @param r right
 	 */
-	public void setRight(TreeNode<T> r) { right = r; }
+	public void setRight(TreeNode r) { right = r; }
 
 	/**
 	 * Sets the children node list
 	 * @param c children
 	 */
-	public void setChildren(DoubleList<TreeNode<T>> c) { children = c; }
+	public void setChildren(DoubleList<TreeNode> c) { children = c; }
 	
 }

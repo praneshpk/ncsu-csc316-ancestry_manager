@@ -19,10 +19,10 @@ public class QueueTest {
 	 * Tests if enqueue method works as expected
 	 */
 	@Test
-	public void testEnqueue() {
+	public void testAdd() {
 		Queue<String> list = new Queue<>();
 		for(int i = 0; i < 5; i++ )
-			list.enqueue( i + "" );
+			list.add( i + "" );
 		Iterator<String> it = list.iterator();
 		for(int i = 0; i < 5; i++ )
 			assertEquals( it.next(), (4-i) + "" );
@@ -36,7 +36,7 @@ public class QueueTest {
 	public void testSize() {
 		Queue<String> list = new Queue<>();
 		for(int i = 0; i < 5; i++ )
-			list.enqueue( i + "" );
+			list.add( i + "" );
 		assertEquals( list.size(), 5 );
 	}
 	
@@ -44,21 +44,21 @@ public class QueueTest {
 	 * Tests if dequeue method works as expected
 	 */
 	@Test
-	public void testDequeue() {
+	public void testRemove() {
 		Queue<String> list = new Queue<>();
 		for(int i = 0; i < 10; i++ )
-			list.enqueue( i + "" );
+			list.add( i + "" );
 		for(int i = 0; i < 5; i++ )
-			list.dequeue();
+			list.remove();
 		assertEquals( list.size(), 5 );
 		
 		Iterator<String> it = list.iterator();
 		for(int i = 0; i < 5; i++ )
 			assertEquals( it.next(), (9-i) + "" );
 		for(int i = 0; i < 5; i++ )
-			list.dequeue();
+			list.remove();
 		try {
-			list.dequeue();
+			list.remove();
 			fail("Did not throw an exception");
 		} catch( Exception e ) {
 			// Supposed to throw an exception
