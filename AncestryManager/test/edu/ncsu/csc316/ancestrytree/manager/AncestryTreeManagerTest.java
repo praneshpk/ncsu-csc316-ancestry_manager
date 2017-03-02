@@ -10,7 +10,9 @@ public class AncestryTreeManagerTest {
 	public void testAncestryTreeManagerStringString() {
 		AncestryTreeManager a = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
 		AncestryTreeManager b = new AncestryTreeManager("input/pre-multi.txt", "input/post-multi.txt");
-		System.out.println(a.getRelationship("B B","T T"));
+		assertEquals(b.getRelationship("D D", "H H"), "D D is H H's father");
+		assertEquals(b.getRelationship("W W", "T T"), "W W is T T's nephew");
+		assertEquals(b.getRelationship("N N", "F F"), "N N is F F's 1st cousin 1 times removed");
 	}
 
 	@Test

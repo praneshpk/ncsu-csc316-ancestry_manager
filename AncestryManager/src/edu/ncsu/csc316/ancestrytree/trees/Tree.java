@@ -11,4 +11,5 @@ public interface Tree {
 	public int getSize();
 	public boolean isEmpty();
 	public TreeNode search(Person person);
+	public TreeNode searchForMark(TreeNode b);
 }

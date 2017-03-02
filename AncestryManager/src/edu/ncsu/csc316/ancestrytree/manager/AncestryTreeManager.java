@@ -46,7 +46,6 @@ public class AncestryTreeManager {
 			System.out.println("Error: PostOrder file is invalid!");
 			System.exit(1);
 		}
-		
 		TreeNode r = buildTree(preOrder.get(0), preOrder, 0, preOrder.size() - 1, postOrder, 0, postOrder.size() - 1);
 		tree = new TraversalTree(r, preOrder.size());
 		System.out.println(getLevelOrder());
@@ -64,11 +63,8 @@ public class AncestryTreeManager {
 	 */
 	public TreeNode buildTree( TreeNode root, ArrayList<TreeNode> preOrder, int preMin, int preMax,
 			ArrayList<TreeNode> postOrder, int postMin, int postMax ) {
-		if(preMin >= preMax || postMin > postMax )
-			System.out.println(root.getData()+ "\n"+preMin+ " "+preMax+" "+postMin+" "+ postMax+"\n");
-		int split = -1;
+		int split = 0;
 		ArrayList<TreeNode> children = new ArrayList<>();
-		
 		for(int i = postMax; i >= postMin; i-- ) {
 			TreeNode child = postOrder.get(i);
 			child.setParent(root);
@@ -79,25 +75,28 @@ public class AncestryTreeManager {
 			}
 		}
 		if(split == postMin) {
-			System.out.println(root.getData());
 			root.setChildren(children);
 			return root;
 		}
-		TreeNode temp = buildTree( preOrder.get(preMin), preOrder, preMin + 1, preMax, postOrder, postMin, split - 1 );
+		TreeNode temp;
+		if(split == postMax )
+			temp = buildTree( preOrder.get(preMin), preOrder, preMin + 1, split, postOrder, postMin, split - 1 );
+		else
+			temp = buildTree( preOrder.get(preMin), preOrder, preMin + 1, preMax - (postMax - split),
+					postOrder, postMin, split - 1 );
 		if(temp != null)
 			temp.setParent(root);
 		if(split != postMax)
-			buildTree( root, preOrder, split + 2, preMax, postOrder, split + 1, postMax );
-		
-		if(root.getParent() == null)
-			if(temp != null ) {
+			buildTree( root, preOrder, preMin + 1 + (split - postMin), preMax, postOrder, split + 1, postMax );
+		if(temp != null ) {
+			if(preMin > 0 || preMax < preOrder.size()-1)
 				root.getChildren().addLast(temp);
-			}
 			else
-				return root;	
-
-		return null;
-		
+				root.setParent(null);
+			return root;
+		}
+		else
+			return null;	
 		
 	}
 
@@ -200,13 +199,111 @@ public class AncestryTreeManager {
 		name = nameB.split("\\s+");
 		if((b = tree.search(new Person(name[0], name[1], 0) )) == null )
 			return null;
-		a.markAncestors(a);
-		b.markAncestors(b);
-			
-		System.out.println(a);
-		System.out.println(b);
-
+		((TraversalTree)tree).markAncestors(a);
+		TreeNode found = tree.searchForMark(b);
+		int apath = ((TraversalTree)tree).getPathLength(0, a, found);
+		if(apath == -1) {
+			((TraversalTree)tree).unmarkAll(tree.getRoot());
+			((TraversalTree)tree).markAncestors(b);
+			found = tree.searchForMark(a);
+			apath = ((TraversalTree)tree).getPathLength(0, a, found);
+		}
+		int bpath = ((TraversalTree)tree).getPathLength(0, b, found);
+		if(bpath == -1) {
+			((TraversalTree)tree).unmarkAll(tree.getRoot());
+			((TraversalTree)tree).markAncestors(a);
+			found = tree.searchForMark(b);
+			bpath = ((TraversalTree)tree).getPathLength(0, b, found);
+		}
+		String res = a.getData().getFname() + " " + a.getData().getLname() +
+				" is " + b.getData().getFname() + " " + b.getData().getLname();
 		
+		if(apath == 0 && bpath == 0)
+			return res;
+		res += "'s ";
+		if(apath == 0 && bpath == 1)
+			if(a.getData().getGender())
+				return res + "mother";
+			else
+				return res + "father";
+		if(apath == 0 && bpath == 2)
+			if(a.getData().getGender())
+				return res + "grandmother";
+			else
+				return res + "grandfather";
+		if(apath == 0 && bpath >= 3) {
+			for(int i = 0; i < bpath - 2; i++ )
+				res += "great-";
+			if(a.getData().getGender())
+				return res + "grandmother";
+			else
+				return res + "grandfather";
+		}
+		if(apath == 1 && bpath == 0 )
+			if(a.getData().getGender())
+				return res + "daughter";
+			else
+				return res + "son";
+		if(apath == 2 && bpath == 0 )
+			if(a.getData().getGender())
+				return res + "granddaughter";
+			else
+				return res + "grandson";
+		if(apath >= 3 && bpath == 0 ) {
+			for(int i = 0; i < bpath - 2; i++ )
+				res += "great-";
+			if(a.getData().getGender())
+				return res + "daughter";
+			else
+				return res + "son";	
+		}
+		if(apath == 1 && bpath == 1)
+			if(a.getData().getGender())
+				return res + "sister";
+			else
+				return res + "brother";
+		if(apath == 1 && bpath == 2)
+			if(a.getData().getGender())
+				return res + "aunt";
+			else
+				return res + "uncle";
+		if(apath == 1 && bpath > 2) {
+			for(int i = 0; i < bpath - 2; i++ )
+				res += "great-";
+			if(a.getData().getGender())
+				return res + "aunt";
+			else
+				return res + "uncle";
+		}
+		if(apath == 2 && bpath == 1)
+			if(a.getData().getGender())
+				return res + "niece";
+			else
+				return res + "nephew";
+		if(apath > 2 && bpath == 1) {
+			for(int i = 0; i < bpath - 2; i++ )
+				res += "great-";
+			if(a.getData().getGender())
+				return res + "aunt";
+			else
+				return res + "uncle";
+		}
+		if(apath >= 2 && bpath >= 2) {
+			String suffix = "";
+			int num;
+			if((num = (Math.min(apath, bpath) - 1)) == 1)
+				suffix += "st";
+			else if(num == 2) 
+				suffix += "nd";
+			else if(num == 3)
+				suffix += "rd";
+			else
+				suffix += "th";
+			return res + num + suffix + " cousin " +
+					Math.abs(apath - bpath) + " times removed";
+		}
+		
+		((TraversalTree)tree).unmarkAll(tree.getRoot());
 		return null;
 	}
 

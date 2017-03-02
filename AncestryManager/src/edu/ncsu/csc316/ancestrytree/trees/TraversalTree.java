@@ -52,6 +52,38 @@ public class TraversalTree implements Tree {
 		}
 		return null;
 	}
+	public TreeNode markAncestors( TreeNode r ) {
+		r.mark();
+		if( r.getParent() != null)
+			markAncestors(r.getParent());
+		return null;
+	}
+	public int getPathLength(int i, TreeNode r, TreeNode b ) {
+		if(r.getData().equals(b.getData()))
+			return i;
+		if(r.getParent() != null)
+			return getPathLength(i + 1, r.getParent(), b);
+		else
+			return -1;
+	}
+		
+	public void unmarkAll(TreeNode r) {
+		if(r.isMarked())
+			r.mark();
+		if(r.getChildren() != null) {
+			ArrayList<TreeNode> children = r.getChildren();
+			for(int i = 0; i < children.size(); i++)
+				unmarkAll(children.get(i));
+		}
+			
+	}
+	public TreeNode searchForMark(TreeNode r ) {
+		if(r.isMarked())
+			return r;
+		if( r.getParent() != null)
+			return searchForMark(r.getParent());
+		return null;
+	}
 
 	public ArrayList<Person> getLevelOrder() {
 		Queue<TreeNode> q = new Queue<>();

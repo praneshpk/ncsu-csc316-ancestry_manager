@@ -61,14 +61,6 @@ public class TreeNode {
 	 */
 	public boolean isMarked() { return marked; }
 	
-	public TreeNode markAncestors( TreeNode root ) {
-		root.mark();
-		ArrayList<TreeNode> children = root.getChildren();
-		if( children != null)
-			for(int i = 0; i < children.size(); i++ )
-				markAncestors(children.get(i));
-		return null;
-	}
 	
 	/**
 	 * Returns the data contained in node
