@@ -73,48 +73,6 @@ public class Queue<E> {
 	}
 	/** End nested Node class */
 	
-	/**
-	 * The nested ListIterator class maintains the functions and variables
-	 * to traverse the List
-	 * @author Pranesh Kamalakanthan
-	 *
-	 */
-	private class ListIterator implements Iterator<E> {
-		/** Current Node of iterator */
-		private Node<E> curr;
-		
-		/** Current iterator position */
-		private int i;
-		
-		/**
-		 * Creates a new DoubleListIterator object
-		 */
-		public ListIterator() {
-			curr = header.next;
-			i = 0;
-		}
-		
-		/**
-		 * Checks if there is another Node in the List
-		 * @return true if there is another Node
-		 * 		   false if there is not
-		 */
-		public boolean hasNext() { return i < size; }
-		
-		/**
-		 * Traverses the list by one and returns the current Node data
-		 * @return curr.data
-		 */
-		public E next() {
-			if( !hasNext() ) throw new NoSuchElementException();
-			E e = curr.data;
-			curr = curr.next;
-			i++;
-			return e;
-		}
-		
-	}
-	/** End nested ListIterator class */
 	
 	
 	/** Header sentinel Node */
@@ -134,12 +92,6 @@ public class Queue<E> {
 		trailer = new Node<>( null, header, null );
 		header.setNext(trailer);
 	}
-	
-	/**
-	 * Gets a new ListIterator object
-	 * @return new ListIterator object
-	 */
-	public ListIterator iterator() { return new ListIterator(); }
 	
 	/**
 	 * Gets the size of the list
