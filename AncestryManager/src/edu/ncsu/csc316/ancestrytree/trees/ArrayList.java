@@ -77,7 +77,7 @@ public class ArrayList<E> {
 		String res = "[ ";
 		for( int i = 0; i < size; i++ )
 			res += data[i] + " ";
-		return res + " ]";
+		return res + "]";
 	}
 	
 	/**

@@ -1,8 +1,5 @@
 package edu.ncsu.csc316.ancestrytree.trees;
 
-import java.util.NoSuchElementException;
-
-
 /**
  * The Queue class contains the data structure that allows
  * multi-purpose lists to be derived from

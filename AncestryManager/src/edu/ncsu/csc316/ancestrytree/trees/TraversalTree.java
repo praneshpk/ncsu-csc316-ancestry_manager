@@ -10,14 +10,6 @@ public class TraversalTree implements Tree {
 	private TreeNode root;
 	
 	/**
-	 * Creates the Tree Object
-	 * @param r the data of the root node
-	 */
-	public TraversalTree( Person r ) {
-		root = new TreeNode(r);
-	}
-	
-	/**
 	 * Creates the Tree Object given a root node and size
 	 * @param r the data of the root node
 	 */
