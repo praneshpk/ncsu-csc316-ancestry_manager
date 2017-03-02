@@ -31,7 +31,9 @@ public class TreeNode {
 	 */
 	public TreeNode(Person d ) {
 		data = d;
-		parent = left = right = null;
+		parent = null;
+		left = null;
+		right = null;
 		children = new ArrayList<>();
 		marked = false;
 	}
@@ -108,6 +110,10 @@ public class TreeNode {
 	 */
 	public void setChildren(ArrayList<TreeNode> c) { children = c; }
 	
+	/**
+	 * Returns a String representation of the TreeNode object
+	 * @return a String representation of the TreeNode object
+	 */
 	public String toString() {
 		String sparent;
 		if( parent == null )
