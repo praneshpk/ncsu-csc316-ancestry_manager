@@ -61,10 +61,10 @@ public class Person {
 	public String getLname() { return lname; }
 	
 	/**
-	 * Gets the gender
-	 * @return gender
+	 * Returns whether the Person is female or male
+	 * @return true if female, false if male
 	 */
-	public boolean getGender() { return gender; }
+	public boolean isFemale() { return gender; }
 	
 	/**
 	 * Checks if they have the same name
@@ -73,10 +73,7 @@ public class Person {
 	 */
 	public boolean equals(Object obj) {
 		Person p = (Person)obj;
-		if( p.fname.equals(fname) && p.lname.equals(lname))
-			return true;
-		else
-			return false;
+		return p.fname.equals(fname) && p.lname.equals(lname);
 	}
 	
 	/**
@@ -85,9 +82,9 @@ public class Person {
 	 */
 	public String toString() {
 		if(id == -1)
-			return fname +" "+lname+" "+ ( (gender) ? "F":"M" );
+			return fname + " " + lname + " " + ( (gender) ? "F" : "M" );
 		else
-			return id +" "+ fname+" "+lname+" "+gender;
+			return id + " " + fname + " " + lname + " " + gender;
 	}
 	
 

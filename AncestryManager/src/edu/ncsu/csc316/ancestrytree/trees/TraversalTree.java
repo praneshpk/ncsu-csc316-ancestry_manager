@@ -46,7 +46,8 @@ public class TraversalTree implements Tree {
 		if(r.getChildren() != null) {
 			ArrayList<TreeNode> children = r.getChildren();
 			for( int i = 0; i < children.size(); i++ ) {
-				if((res = search(children.get(i), data)) != null)
+				res = search(children.get(i), data);
+				if(res != null)
 					return res;
 			}
 		}

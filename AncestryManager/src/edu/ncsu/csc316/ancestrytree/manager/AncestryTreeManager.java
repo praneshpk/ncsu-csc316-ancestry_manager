@@ -49,7 +49,7 @@ public class AncestryTreeManager {
 	
 	/**
 	 * Builds a TraversalTree and returns the root Node
-	 * @oaram root the current root node
+	 * @param root the current root node
 	 * @param preOrder the list of elements in preOrder traversal
 	 * @param preMin the min index to consider in preOrder traversal
 	 * @param preMax the max index to consider in the preOrder traversal
@@ -109,7 +109,7 @@ public class AncestryTreeManager {
 	    	if(p.getId() > list.size() ||
 	    			sorted[p.getId() - 1] != null )
 				return null;
-	    	sorted[ p.getId()-1 ] = p;
+	    	sorted[ p.getId() - 1 ] = p;
 	    }
 	   
 	    AhnentafelTree t = new AhnentafelTree(sorted[0]);
@@ -157,7 +157,7 @@ public class AncestryTreeManager {
 				}
 			}
 		} catch(Exception e) {
-			System.out.println("Error: File "+path+" not found");
+			System.out.println("Error: File " + path + " not found");
 			return null;
 		}
 		return d;
@@ -227,68 +227,68 @@ public class AncestryTreeManager {
 			return res;
 		res += "'s ";
 		if(apath == 0 && bpath == 1)
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "mother";
 			else
 				return res + "father";
 		if(apath == 0 && bpath == 2)
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "grandmother";
 			else
 				return res + "grandfather";
 		if(apath == 0 && bpath >= 3) {
 			for(int i = 0; i < bpath - 2; i++ )
 				res += "great-";
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "grandmother";
 			else
 				return res + "grandfather";
 		}
 		if(apath == 1 && bpath == 0 )
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "daughter";
 			else
 				return res + "son";
 		if(apath == 2 && bpath == 0 )
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "granddaughter";
 			else
 				return res + "grandson";
 		if(apath >= 3 && bpath == 0 ) {
 			for(int i = 0; i < bpath - 2; i++ )
 				res += "great-";
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "daughter";
 			else
 				return res + "son";	
 		}
 		if(apath == 1 && bpath == 1)
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "sister";
 			else
 				return res + "brother";
 		if(apath == 1 && bpath == 2)
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "aunt";
 			else
 				return res + "uncle";
 		if(apath == 1 && bpath > 2) {
 			for(int i = 0; i < bpath - 2; i++ )
 				res += "great-";
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "aunt";
 			else
 				return res + "uncle";
 		}
 		if(apath == 2 && bpath == 1)
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "niece";
 			else
 				return res + "nephew";
 		if(apath > 2 && bpath == 1) {
 			for(int i = 0; i < bpath - 2; i++ )
 				res += "great-";
-			if(a.getData().getGender())
+			if(a.getData().isFemale())
 				return res + "aunt";
 			else
 				return res + "uncle";
@@ -333,7 +333,7 @@ public class AncestryTreeManager {
 				str += "great-";
 			else if( i > 1 )
 				str += "grand";
-			else if(a.getGender())
+			else if(a.isFemale())
 				str += "mother";
 			else
 				str += "father";

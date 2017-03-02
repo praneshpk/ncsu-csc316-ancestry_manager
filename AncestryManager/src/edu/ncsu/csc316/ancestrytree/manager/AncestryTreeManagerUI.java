@@ -11,6 +11,6 @@ public class AncestryTreeManagerUI {
 	 * @param args command line arguments
 	 */
 	public void main(String[] args) {
-		
+		// Will be implemented for BBTP
 	}
 }
