@@ -340,5 +340,14 @@ public class AncestryTreeManager {
 		}
 		return res + str;
 	}
+	
+	/**
+	 * Returns a String representation of the tree
+	 * @return String representation of the tree
+	 */
+	public String toString() {
+		return tree.getRoot().toString();
+		
+	}
 
 }

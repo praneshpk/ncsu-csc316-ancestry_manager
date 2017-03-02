@@ -18,7 +18,29 @@ public class AncestryTreeManagerTest {
 	@Test
 	public void testTraversalTree() {
 		AncestryTreeManager a = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
+		assertEquals(a.toString(), "{ Henry Leonard M; marked: false; parent: none; children: [ "
+								+ "{ Claire Murray F; marked: false; parent: Henry Leonard M; children: [ "
+								+ "{ Percy Perry M; marked: false; parent: Claire Murray F; children: [ ] } "
+								+ "{ Richard Williams M; marked: false; parent: Claire Murray F; children: [ ] } ] } "
+								+ "{ Teresa Smith F; marked: false; parent: Henry Leonard M; children: [ "
+								+ "{ Zachary Doe M; marked: false; parent: Teresa Smith F; children: [ ] } "
+								+ "{ Xena Jones F; marked: false; parent: Teresa Smith F; children: [ ] } ] } ] }");
 		AncestryTreeManager b = new AncestryTreeManager("input/pre-multi.txt", "input/post-multi.txt");
+		assertEquals(b.toString(), "{ D D M; marked: false; parent: none; children: [ "
+								+ "{ Q Q M; marked: false; parent: D D M; children: [ "
+								+ "{ N N F; marked: false; parent: Q Q M; children: [ ] } ] } "
+								+ "{ H H F; marked: false; parent: D D M; children: [ "
+								+ "{ C C M; marked: false; parent: H H F; children: [ "
+								+ "{ P P F; marked: false; parent: C C M; children: [ ] } "
+								+ "{ R R M; marked: false; parent: C C M; children: [ ] } ] } "
+								+ "{ T T F; marked: false; parent: H H F; children: [ "
+								+ "{ Z Z F; marked: false; parent: T T F; children: [ ] } "
+								+ "{ X X M; marked: false; parent: T T F; children: [ ] } ] } "
+								+ "{ B B M; marked: false; parent: H H F; children: [ "
+								+ "{ F F F; marked: false; parent: B B M; children: [ ] } "
+								+ "{ W W M; marked: false; parent: B B M; children: [ ] } "
+								+ "{ M M F; marked: false; parent: B B M; children: [ ] } "
+								+ "{ G G M; marked: false; parent: B B M; children: [ ] } ] } ] } ] }");
 		assertEquals(a.getRelationship("Zachary Doe", "Henry Leonard"), "Zachary Doe is Henry Leonard's grandson");
 		assertEquals(b.getRelationship("D D", "H H"), "D D is H H's father");
 		assertEquals(b.getRelationship("H H", "D D"), "H H is D D's daughter");

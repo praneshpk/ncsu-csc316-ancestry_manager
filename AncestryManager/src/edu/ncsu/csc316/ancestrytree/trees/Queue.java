@@ -91,18 +91,6 @@ public class Queue<E> {
 	}
 	
 	/**
-	 * Gets the size of the list
-	 * @return size of the list
-	 */
-	public int size() { return size; }
-	
-	/**
-	 * Determines whether List is empty or not
-	 * @return true if it is empty, false otherwise
-	 */
-	public boolean isEmpty() { return size == 0; }
-	
-	/**
 	 * Creates a new Node with the given data and
 	 * adds it to the front of the List
 	 * @param d Node data
