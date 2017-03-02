@@ -4,9 +4,17 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * The AncestryTreeManagerTest class maintains all the functions
+ * required for testing the AncestryTreeManager class
+ * @author Pranesh Kamalakanthan
+ *
+ */
 public class AncestryTreeManagerTest {
 
-	
+	/**
+	 * Tests creation of the TraversalTree object and all its relevant functions
+	 */
 	@Test
 	public void testTraversalTree() {
 		AncestryTreeManager a = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
@@ -24,8 +32,11 @@ public class AncestryTreeManagerTest {
 		new AncestryTreeManager("input/invalid.txt", "input/small-postorder.txt");
 	}
 
+	/**
+	 * Tests creation of the AhnentafelTree object and all its relevant fuctions
+	 */
 	@Test
-	public void testAnhnentafelTree() {
+	public void testAhnentafelTree() {
 		AncestryTreeManager a = new AncestryTreeManager("input/small-ahnentafel.txt");
 		assertEquals(a.getRelationship("Sally Poole"), "Sally Poole is Billy Smith's great-grandmother");
 		assertEquals(a.getRelationship("Billy Smith"), "Billy Smith is Billy Smith");

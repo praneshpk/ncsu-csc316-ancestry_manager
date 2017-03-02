@@ -1,5 +1,10 @@
 package edu.ncsu.csc316.ancestrytree.trees;
 
+/**
+ * The TraversalTree class acts as the main data structure for AncestryManager
+ * @author Pranesh Kamalakanthan
+ *
+ */
 public class TraversalTree implements Tree {
 	/** The root TreeNode of the tree */
 	private TreeNode root;
@@ -15,7 +20,6 @@ public class TraversalTree implements Tree {
 	/**
 	 * Creates the Tree Object given a root node and size
 	 * @param r the data of the root node
-	 * @param s size of the node
 	 */
 	public TraversalTree(TreeNode r) {
 		root = r;

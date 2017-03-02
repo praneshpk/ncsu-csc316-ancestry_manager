@@ -2,7 +2,6 @@ package edu.ncsu.csc316.ancestrytree.trees;
 
 /**
  * The AhnentafelTree class acts as the main data structure for AncestryManager
- * and the Ahnentefal-style tree
  * @author Pranesh Kamalakanthan
  *
  */
@@ -88,12 +87,16 @@ public class AhnentafelTree implements Tree {
 		TreeNode res;
 		if(r.getData().equals(data))
 			return r;
-		if(r.getLeft() != null)
-			if((res = search(r.getLeft(), data)) != null)
+		if(r.getLeft() != null) {
+			res = search(r.getLeft(), data);
+			if(res != null)
 				return res;
-		if(r.getRight() != null)
-			if((res = search(r.getRight(), data)) != null)
+		}
+		if(r.getRight() != null) {
+			res = search(r.getRight(), data);
+			if(res != null)
 				return res;
+		}
 		return null;
 	}
 }

@@ -21,7 +21,8 @@ public class AncestryTreeManager {
 	 */
 	public AncestryTreeManager(String ahnentafelFilePath) {
 	    ArrayList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
-	    if((tree = buildTree( unsorted )) == null ) {
+	    tree = buildTree( unsorted );
+	    if(tree == null ) {
 	    	System.out.println("Error: Invalid file!");
     		return;
 	    }
@@ -48,6 +49,7 @@ public class AncestryTreeManager {
 	
 	/**
 	 * Builds a TraversalTree and returns the root Node
+	 * @oaram root the current root node
 	 * @param preOrder the list of elements in preOrder traversal
 	 * @param preMin the min index to consider in preOrder traversal
 	 * @param preMax the max index to consider in the preOrder traversal
@@ -84,7 +86,7 @@ public class AncestryTreeManager {
 		if(split != postMax)
 			buildTree( root, preOrder, preMin + 1 + (split - postMin), preMax, postOrder, split + 1, postMax );
 		if(temp != null ) {
-			if(preMin > 0 || preMax < preOrder.size()-1)
+			if(preMin > 0 || preMax < preOrder.size() - 1)
 				root.getChildren().addLast(temp);
 			else
 				root.setParent(null);
@@ -105,7 +107,7 @@ public class AncestryTreeManager {
 	    for(int i = 0; i < list.size(); i++ ) {
 	    	Person p = list.get(i).getData();
 	    	if(p.getId() > list.size() ||
-	    			sorted[p.getId()-1] != null )
+	    			sorted[p.getId() - 1] != null )
 				return null;
 	    	sorted[ p.getId()-1 ] = p;
 	    }
@@ -189,11 +191,12 @@ public class AncestryTreeManager {
 	 */
 	public String getRelationship(String nameA, String nameB) {
 		String[] name = nameA.split("\\s+");
-		TreeNode a, b;
-		if((a = tree.search(new Person(name[0], name[1], 0))) == null )
+		TreeNode a = tree.search(new Person(name[0], name[1], 0));
+		if(a == null )
 			return null;
 		name = nameB.split("\\s+");
-		if((b = tree.search(new Person(name[0], name[1], 0) )) == null )
+		TreeNode b = tree.search(new Person(name[0], name[1], 0) );
+		if(b == null )
 			return null;
 		((TraversalTree)tree).markAncestors(a);
 		TreeNode found = ((TraversalTree)tree).searchForMark(b);
@@ -292,8 +295,8 @@ public class AncestryTreeManager {
 		}
 		if(apath >= 2 && bpath >= 2) {
 			String suffix = "";
-			int num;
-			if((num = (Math.min(apath, bpath) - 1)) == 1)
+			int num = Math.min(apath, bpath) - 1;
+			if(num == 1)
 				suffix += "st";
 			else if(num == 2) 
 				suffix += "nd";
@@ -325,7 +328,7 @@ public class AncestryTreeManager {
 		Person a = tree.search( new Person(full[0], full[1], 0) ).getData();
 		int r = (int) Math.floor( Math.log(a.getId()) / Math.log(2) );
 		String str = "";
-		for(int i=r; i > 0; i-- ) {
+		for(int i = r; i > 0; i-- ) {
 			if( i > 2 )
 				str += "great-";
 			else if( i > 1 )

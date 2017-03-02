@@ -17,7 +17,8 @@ public class Person {
 	
 	/**
 	 * Creates a new Person object with gender
-	 * @param n name
+	 * @param fn first name
+	 * @param ln last name
 	 * @param g gender, female = true, male = false
 	 */
 	public Person( String fn, String ln, boolean g ) {
@@ -28,7 +29,8 @@ public class Person {
 	}
 	/**
 	 * Creates a new Person object with Ahnentafel id
-	 * @param n name
+	 * @param fn first name
+	 * @param ln last name
 	 * @param i Ahnentafel id
 	 */
 	public Person( String fn, String ln, int i ) {
@@ -66,7 +68,7 @@ public class Person {
 	
 	/**
 	 * Checks if they have the same name
-	 * @param p Person being compared to
+	 * @param obj Person being compared to
 	 * @return true if they are the same, false otherwise
 	 */
 	public boolean equals(Object obj) {
@@ -79,6 +81,7 @@ public class Person {
 	
 	/**
 	 * Returns the Person object's information
+	 * @return a String representation of the object
 	 */
 	public String toString() {
 		if(id == -1)

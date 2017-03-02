@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 
 /**
- * The LinkedList abstract class contains the data structure that allows
+ * The Queue class contains the data structure that allows
  * multi-purpose lists to be derived from
  * @author Pranesh Kamalakanthan
  *
@@ -157,6 +157,7 @@ public class Queue<E> {
 	 * Creates a new Node with the given data and
 	 * adds it to the front of the List
 	 * @param d Node data
+	 * @return added data
 	 */
 	public E add( E d ) {
 		Node<E> e = new Node<>(d, header, header.getNext());

@@ -1,5 +1,12 @@
 package edu.ncsu.csc316.ancestrytree.trees;
 
+/**
+ * The ArrayList class acts as one of the main data structures required for many
+ * of the operations in the Tree classes
+ * @author Pranesh Kamalakanthan
+ *
+ * @param <E> data contained in ArrayList
+ */
 public class ArrayList<E> {
 	/** Default array capacity */
 	public static final int CAP = 16;
@@ -84,6 +91,10 @@ public class ArrayList<E> {
 			throw new IndexOutOfBoundsException("Illegal index: " + i );
 	}
 	
+	/**
+	 * Resizes the ArrayList
+	 * @param capacity new capacity
+	 */
 	protected void resize(int capacity) {
 		E[] temp = (E[]) new Object[capacity];
 		for(int i = 0; i < size; i++ )
