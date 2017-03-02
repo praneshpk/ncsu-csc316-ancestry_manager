@@ -43,6 +43,8 @@ public class AncestryTreeManager {
 		if( postOrder == null )
 			return;
 		TreeNode r = buildTree(preOrder.get(0), preOrder, 0, preOrder.size() - 1, postOrder, 0, postOrder.size() - 1);
+		if( r == null )
+			return;
 		tree = new TraversalTree(r);
 		System.out.println(getLevelOrder());
 	}
