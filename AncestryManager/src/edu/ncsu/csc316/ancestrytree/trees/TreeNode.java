@@ -37,20 +37,6 @@ public class TreeNode {
 	}
 	
 	/**
-	 * Creates the TreeNode object with parent and children nodes
-	 * @param d data
-	 * @param p parent node
-	 * @param c children nodes
-	 */
-	public TreeNode(Person d, TreeNode p, ArrayList<TreeNode> c) {
-		data = d;
-		left = right = null;
-		parent = p;
-		children = c;
-		marked = false;
-	}
-	
-	/**
 	 * Switches the node mark on/off
 	 */
 	public void mark() { marked = !marked; }

@@ -30,12 +30,6 @@ public class ArrayList<E> {
 	public int size() { return size; }
 	
 	/**
-	 * Determines if the list is empty
-	 * @return true if it is empty, false otherwise
-	 */
-	public boolean isEmpty() { return size == 0; }
-	
-	/**
 	 * Returns the element at index i 
 	 * @param i index
 	 * @return E element

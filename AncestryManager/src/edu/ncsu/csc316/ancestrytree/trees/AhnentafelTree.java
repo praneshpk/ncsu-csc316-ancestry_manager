@@ -9,8 +9,6 @@ package edu.ncsu.csc316.ancestrytree.trees;
 public class AhnentafelTree implements Tree {
 	/** The root TreeNode of the tree */
 	private TreeNode root;
-	/** The size of the tree */
-	private int size;
 	
 	/**
 	 * Creates the Tree Object
@@ -18,25 +16,6 @@ public class AhnentafelTree implements Tree {
 	 */
 	public AhnentafelTree( Person r ) {
 		root = new TreeNode(r);
-		size = 1;
-	}
-	
-	/**
-	 * Searches for a marked node from given start node
-	 * @param r node to start search from
-	 * @return marked TreeNode
-	 */
-	public TreeNode searchForMark(TreeNode r) {
-		TreeNode res;
-		if(r.isMarked())
-			return r;
-		if(r.getLeft() != null)
-			if((res = searchForMark(r.getLeft())) != null)
-				return res;
-		if(r.getRight() != null)
-			if((res = searchForMark(r.getRight())) != null)
-				return res;
-		return null;
 	}
 	
 	/**
@@ -66,45 +45,11 @@ public class AhnentafelTree implements Tree {
 	public TreeNode getRoot() { return root; }
 	
 	/**
-	 * Returns the node at the given index
-	 * @param index position of node
-	 * @return the node at index
-	 */
-	public TreeNode get( int index ) {
-		Queue< TreeNode > q = new Queue<>();
-		TreeNode node = root;
-		int i = 0;
-		while( node != null ) {
-			if( i++ == index )
-				return node;
-			if(node.getLeft() != null )
-				q.add(node.getLeft());
-			if(node.getRight() != null )
-				q.add(node.getRight());
-			node = q.remove();
-		}
-		throw new IndexOutOfBoundsException();
-	}
-	
-	/**
-	 * Returns the size of the tree
-	 * @return size of tree
-	 */
-	public int getSize() { return size; }
-	
-	/**
-	 * Determines if the tree is empty or not
-	 * @return true if the tree is empty, false otherwise
-	 */
-	public boolean isEmpty() { return size == 0; }
-	
-	/**
 	 * Creates a node with given data and adds it to tree
 	 * @param data given data
 	 */
 	public void add(Person data) {
 		root = insert(root, data);
-		size++;
 	}
 	/**
 	 * A recursive function to add a new node to the tree

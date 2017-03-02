@@ -5,11 +5,22 @@ package edu.ncsu.csc316.ancestrytree.trees;
  *
  */
 public interface Tree {
+	/**
+	 * Returns a list of the tree in level order
+	 * @return an ArrayList of the tree in level order
+	 */
 	public ArrayList<Person> getLevelOrder();
+	
+	/**
+	 * Gets the root node of the tree
+	 * @return tree root node
+	 */
 	public TreeNode getRoot();
-	public TreeNode get(int index);
-	public int getSize();
-	public boolean isEmpty();
+	
+	/**
+	 * Searches for the given Person and returns the node
+	 * @param person given Person object
+	 * @return The found node, otherwise returns null
+	 */
 	public TreeNode search(Person person);
-	public TreeNode searchForMark(TreeNode b);
 }

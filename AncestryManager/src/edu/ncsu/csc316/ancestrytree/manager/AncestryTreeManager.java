@@ -15,7 +15,6 @@ public class AncestryTreeManager {
 	/** The tree that will contain the ancestry data */
 	private Tree tree;
 	
-	
 	/**
 	 * Constructor to initialize an instance of your AncestryTreeManager object
 	 * @param ahnentafelFilePath the path to the file that contains the ahnentafel
@@ -23,8 +22,8 @@ public class AncestryTreeManager {
 	public AncestryTreeManager(String ahnentafelFilePath) {
 	    ArrayList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
 	    if((tree = buildTree( unsorted )) == null ) {
-    		System.out.println("Error: Ahnentafel file is invalid!");
-    		System.exit(1);
+	    	System.out.println("Error: Invalid file!");
+    		return;
 	    }
 	    System.out.println(getLevelOrder());	    
 	    
@@ -37,17 +36,13 @@ public class AncestryTreeManager {
 	 */
 	public AncestryTreeManager(String preOrderFilePath, String postOrderFilePath) {
 		ArrayList<TreeNode> preOrder = parseFile(preOrderFilePath, false);
-		if( preOrder == null ) {
-			System.out.println("Error: PreOrder file is invalid!");
-			System.exit(1);
-		}
+		if( preOrder == null )
+			return;
 		ArrayList<TreeNode> postOrder = parseFile(postOrderFilePath, false);
-		if( postOrder == null ) {
-			System.out.println("Error: PostOrder file is invalid!");
-			System.exit(1);
-		}
+		if( postOrder == null )
+			return;
 		TreeNode r = buildTree(preOrder.get(0), preOrder, 0, preOrder.size() - 1, postOrder, 0, postOrder.size() - 1);
-		tree = new TraversalTree(r, preOrder.size());
+		tree = new TraversalTree(r);
 		System.out.println(getLevelOrder());
 	}
 	
@@ -102,7 +97,7 @@ public class AncestryTreeManager {
 
 	/**
 	 * Builds an Ahnentafel tree from a list
-	 * @param list a DoubleList containing TreeNodes
+	 * @param list an ArrayList containing TreeNodes
 	 * @return a Tree object
 	 */
 	public Tree buildTree(ArrayList<TreeNode> list) {
@@ -126,7 +121,7 @@ public class AncestryTreeManager {
 	 * @param path the file path
 	 * @param ahnentafel true if it is an ahnentafel file,
 	 * false if it is a pre/postorder file
-	 * @return a DoubleList of people, or null if an error was encountered
+	 * @return an ArrayList of people, or null if an error was encountered
 	 */
 	public ArrayList<TreeNode> parseFile( String path, boolean ahnentafel ) {
 		ArrayList<TreeNode> d = new ArrayList<>();
@@ -155,12 +150,13 @@ public class AncestryTreeManager {
 						d.addLast(new TreeNode(new Person(fname, lname, g)));
 					}
 				} catch( Exception e ) {
+					System.out.println("Error: Invalid file!");
 					return null;
 				}
 			}
 		} catch(Exception e) {
 			System.out.println("Error: File "+path+" not found");
-			System.exit(0);
+			return null;
 		}
 		return d;
 	}
@@ -200,19 +196,25 @@ public class AncestryTreeManager {
 		if((b = tree.search(new Person(name[0], name[1], 0) )) == null )
 			return null;
 		((TraversalTree)tree).markAncestors(a);
-		TreeNode found = tree.searchForMark(b);
+		TreeNode found = ((TraversalTree)tree).searchForMark(b);
+		if(found == null) {
+			((TraversalTree)tree).unmarkAll(tree.getRoot());
+			((TraversalTree)tree).markAncestors(b);
+			found = ((TraversalTree)tree).searchForMark(a);
+		}
+			
 		int apath = ((TraversalTree)tree).getPathLength(0, a, found);
 		if(apath == -1) {
 			((TraversalTree)tree).unmarkAll(tree.getRoot());
 			((TraversalTree)tree).markAncestors(b);
-			found = tree.searchForMark(a);
+			found = ((TraversalTree)tree).searchForMark(a);
 			apath = ((TraversalTree)tree).getPathLength(0, a, found);
 		}
 		int bpath = ((TraversalTree)tree).getPathLength(0, b, found);
 		if(bpath == -1) {
 			((TraversalTree)tree).unmarkAll(tree.getRoot());
 			((TraversalTree)tree).markAncestors(a);
-			found = tree.searchForMark(b);
+			found = ((TraversalTree)tree).searchForMark(b);
 			bpath = ((TraversalTree)tree).getPathLength(0, b, found);
 		}
 		String res = a.getData().getFname() + " " + a.getData().getLname() +

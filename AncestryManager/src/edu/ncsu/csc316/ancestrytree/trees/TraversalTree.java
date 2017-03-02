@@ -3,8 +3,6 @@ package edu.ncsu.csc316.ancestrytree.trees;
 public class TraversalTree implements Tree {
 	/** The root TreeNode of the tree */
 	private TreeNode root;
-	/** The size of the tree */
-	private int size;
 	
 	/**
 	 * Creates the Tree Object
@@ -12,7 +10,6 @@ public class TraversalTree implements Tree {
 	 */
 	public TraversalTree( Person r ) {
 		root = new TreeNode(r);
-		size = 1;
 	}
 	
 	/**
@@ -20,9 +17,8 @@ public class TraversalTree implements Tree {
 	 * @param r the data of the root node
 	 * @param s size of the node
 	 */
-	public TraversalTree(TreeNode r, int s ) {
+	public TraversalTree(TreeNode r) {
 		root = r;
-		size = s;
 	}
 	
 	/**
@@ -52,12 +48,26 @@ public class TraversalTree implements Tree {
 		}
 		return null;
 	}
+	
+	/**
+	 * Marks the ancestors of the given root recursively, including itself
+	 * @param r given root node
+	 * @return the root node
+	 */
 	public TreeNode markAncestors( TreeNode r ) {
 		r.mark();
 		if( r.getParent() != null)
 			markAncestors(r.getParent());
 		return null;
 	}
+	
+	/**
+	 * Finds the path length from the root node to the destination node recursively
+	 * @param i initial path length, used in recursion (should pass in 0)
+	 * @param r root node
+	 * @param b destination node
+	 * @return the path length, -1 if not found
+	 */
 	public int getPathLength(int i, TreeNode r, TreeNode b ) {
 		if(r.getData().equals(b.getData()))
 			return i;
@@ -67,6 +77,10 @@ public class TraversalTree implements Tree {
 			return -1;
 	}
 		
+	/**
+	 * Unmarks all of the nodes, starting from the given root node
+	 * @param r given root node
+	 */
 	public void unmarkAll(TreeNode r) {
 		if(r.isMarked())
 			r.mark();
@@ -77,6 +91,12 @@ public class TraversalTree implements Tree {
 		}
 			
 	}
+	
+	/**
+	 * Searches for a marked node, starting from the given root node
+	 * @param r given root node
+	 * @return the found TreeNode, null otherwise
+	 */
 	public TreeNode searchForMark(TreeNode r ) {
 		if(r.isMarked())
 			return r;
@@ -85,6 +105,10 @@ public class TraversalTree implements Tree {
 		return null;
 	}
 
+	/**
+	 * Returns a list of the tree in level order
+	 * @return an ArrayList of the tree in level order
+	 */
 	public ArrayList<Person> getLevelOrder() {
 		Queue<TreeNode> q = new Queue<>();
 		ArrayList<Person> res = new ArrayList<>();
@@ -107,22 +131,5 @@ public class TraversalTree implements Tree {
 	 * @return root node
 	 */
 	public TreeNode getRoot() { return root; }
-
-	public TreeNode get(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * Returns the size of the tree
-	 * @return size
-	 */
-	public int getSize() { return size; }
-
-	/**
-	 * Determines if the tree is empty or not
-	 * @return true if the tree is empty, false otherwise
-	 */
-	public boolean isEmpty() { return size == 0; }
 
 }
