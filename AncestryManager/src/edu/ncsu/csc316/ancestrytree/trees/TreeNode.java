@@ -81,12 +81,6 @@ public class TreeNode {
 	public ArrayList<TreeNode> getChildren() { return children; }
 	
 	/**
-	 * Sets the data in node
-	 * @param d data
-	 */
-	public void setData( Person d ) { data = d; }
-	
-	/**
 	 * Sets the parent of node
 	 * @param p parent
 	 */

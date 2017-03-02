@@ -48,6 +48,10 @@ public class AncestryTreeManagerTest {
 		assertEquals(b.getRelationship("T T", "W W"), "T T is W W's aunt");
 		assertEquals(b.getRelationship("N N", "F F"), "N N is F F's 1st cousin 1 times removed");
 		assertEquals(b.getRelationship("N N", "D D"), "N N is D D's granddaughter");
+		assertEquals(b.getRelationship("D D", "N N"), "D D is N N's grandfather");
+		assertEquals(b.getRelationship("T T", "Q Q"), "T T is Q Q's niece");
+		assertEquals(b.getRelationship("H H", "Q Q"), "H H is Q Q's sister");
+		assertEquals(b.getRelationship("Q Q", "H H"), "Q Q is H H's brother");
 		
 		new AncestryTreeManager("input/nonexistent.txt", "input/small-postorder.txt");
 		new AncestryTreeManager("input/small-preorder.txt", "input/nonexistent.txt");
