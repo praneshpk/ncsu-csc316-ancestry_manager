@@ -53,6 +53,9 @@ public class AncestryTreeManagerTest {
 		assertEquals(b.getRelationship("H H", "Q Q"), "H H is Q Q's sister");
 		assertEquals(b.getRelationship("Q Q", "H H"), "Q Q is H H's brother");
 		
+		AncestryTreeManager c = new AncestryTreeManager("input/pre-single.txt", "input/post-single.txt");
+		assertEquals(c.getLevelOrder(), "LevelOrder[Guy, Single]");
+		
 		new AncestryTreeManager("input/nonexistent.txt", "input/small-postorder.txt");
 		new AncestryTreeManager("input/small-preorder.txt", "input/nonexistent.txt");
 		new AncestryTreeManager("input/invalid.txt", "input/small-postorder.txt");

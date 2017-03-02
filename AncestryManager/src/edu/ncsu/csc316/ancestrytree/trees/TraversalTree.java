@@ -110,10 +110,6 @@ public class TraversalTree implements Tree {
 		Queue<TreeNode> q = new Queue<>();
 		ArrayList<Person> res = new ArrayList<>();
 		TreeNode node = root;
-		if(node.getChildren() == null) {
-			res.addLast(node.getData());
-			return res;
-		}
 		while( node != null ) {
 			res.addLast(node.getData());
 			if(node.getChildren() != null ) {
