@@ -20,7 +20,7 @@ public class TreeNode {
 	private TreeNode right;
 	
 	/** Children nodes */
-	private DoubleList<TreeNode> children;
+	private ArrayList<TreeNode> children;
 	
 	/** Marked/unmarked */
 	private boolean marked;
@@ -32,7 +32,7 @@ public class TreeNode {
 	public TreeNode(Person d ) {
 		data = d;
 		parent = left = right = null;
-		children = null;
+		children = new ArrayList<>();
 		marked = false;
 	}
 	
@@ -42,7 +42,7 @@ public class TreeNode {
 	 * @param p parent node
 	 * @param c children nodes
 	 */
-	public TreeNode(Person d, TreeNode p, DoubleList<TreeNode> c) {
+	public TreeNode(Person d, TreeNode p, ArrayList<TreeNode> c) {
 		data = d;
 		left = right = null;
 		parent = p;
@@ -89,7 +89,7 @@ public class TreeNode {
 	 * Returns the children nodes
 	 * @return children
 	 */
-	public DoubleList<TreeNode> getChildren() { return children; }
+	public ArrayList<TreeNode> getChildren() { return children; }
 	
 	/**
 	 * Sets the data in node
@@ -119,6 +119,15 @@ public class TreeNode {
 	 * Sets the children node list
 	 * @param c children
 	 */
-	public void setChildren(DoubleList<TreeNode> c) { children = c; }
+	public void setChildren(ArrayList<TreeNode> c) { children = c; }
+	
+	public String toString() {
+		String sparent;
+		if( parent == null )
+			sparent = "none";
+		else
+			sparent = parent.getData().toString();
+		return "{ " + data.toString() + "; parent: " + sparent + "; children: " + children + " }";
+	}
 	
 }

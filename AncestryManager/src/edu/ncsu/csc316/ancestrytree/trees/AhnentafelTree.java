@@ -20,38 +20,6 @@ public class AhnentafelTree implements Tree {
 		root = new TreeNode(r);
 		size = 1;
 	}
-	/**
-	 * Searches for the given data and returns the data if found
-	 * @param data search data
-	 * @return data if found, null otherwise
-	 */
-	public Person search(Person data) {
-		TreeNode res;
-		if( (res = search(root, data)) != null )
-			return res.getData();
-		else
-			return null;
-	}
-	
-	/**
-	 * Searches for the given data in tree and returns
-	 * the node if found
-	 * @param r root node
-	 * @param data search data
-	 * @return returns the node if found, null otherwise
-	 */
-	private TreeNode search(TreeNode r, Person data) {
-		TreeNode res;
-		if(r.getData().equals(data))
-			return r;
-		if(r.getLeft() != null)
-			if((res = search(r.getLeft(), data)) != null)
-				return res;
-		if(r.getRight() != null)
-			if((res = search(r.getRight(), data)) != null)
-				return res;
-		return null;
-	}
 	
 	/**
 	 * Searches for a marked node from given start node
@@ -75,13 +43,13 @@ public class AhnentafelTree implements Tree {
 	 * Returns the tree in level order
 	 * @return a Queue of the tree in level order
 	 */
-	public DoubleList<Person> getLevelOrder() {
+	public ArrayList<Person> getLevelOrder() {
 		Queue<TreeNode> q = new Queue<>();
-		DoubleList<Person> res = new DoubleList<>();
+		ArrayList<Person> res = new ArrayList<>();
 		TreeNode node = root;
 		
 		while( node != null ) {
-			res.add(node.getData());
+			res.addLast(node.getData());
 			if(node.getLeft() != null )
 				q.add(node.getLeft());
 			if(node.getRight() != null )
@@ -155,5 +123,38 @@ public class AhnentafelTree implements Tree {
 			insert(r.getLeft(), data);
 		
 		return r;
+	}
+	
+	/**
+	 * Searches for the given data and returns the data if found
+	 * @param data search data
+	 * @return data if found, null otherwise
+	 */
+	public Person search(Person data) {
+		TreeNode res;
+		if( (res = search(root, data)) != null )
+			return res.getData();
+		else
+			return null;
+	}
+
+	/**
+	 * Searches for the given data in tree and returns
+	 * the node if found
+	 * @param r root node
+	 * @param data search data
+	 * @return returns the node if found, null otherwise
+	 */
+	private TreeNode search(TreeNode r, Person data) {
+		TreeNode res;
+		if(r.getData().equals(data))
+			return r;
+		if(r.getLeft() != null)
+			if((res = search(r.getLeft(), data)) != null)
+				return res;
+		if(r.getRight() != null)
+			if((res = search(r.getRight(), data)) != null)
+				return res;
+		return null;
 	}
 }

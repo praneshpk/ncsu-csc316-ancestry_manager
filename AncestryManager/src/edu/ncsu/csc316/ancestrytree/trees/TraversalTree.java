@@ -25,19 +25,55 @@ public class TraversalTree implements Tree {
 		size = s;
 	}
 	
-	public TreeNode search(TreeNode r, Person data) {
-		// TODO Auto-generated method stub
+	/**
+	 * Searches for the given data and returns the data if found
+	 * @param data search data
+	 * @return data if found, null otherwise
+	 */
+	public Person search(Person data) {
+		TreeNode res;
+		if( (res = search(root, data)) != null )
+			return res.getData();
+		else
+			return null;
+	}
+	
+	/**
+	 * Searches for the given data in tree and returns
+	 * the node if found
+	 * @param r root node
+	 * @param data search data
+	 * @return returns the node if found, null otherwise
+	 */
+	private TreeNode search(TreeNode r, Person data) {
+		TreeNode res;
+		if(r.getData().equals(data))
+			return r;
+		if(r.getChildren() != null) {
+			ArrayList<TreeNode> children = r.getChildren();
+			for( int i = 0; i < children.size(); i++ ) {
+				if((res = search(children.get(i), data)) != null)
+					return res;
+			}
+		}
 		return null;
 	}
 
-	public TreeNode searchForMark(TreeNode r) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public DoubleList getLevelOrder() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Person> getLevelOrder() {
+		Queue<TreeNode> q = new Queue<>();
+		ArrayList<Person> res = new ArrayList<>();
+		TreeNode node = root;
+		
+		while( node != null ) {
+			res.addLast(node.getData());
+			if(node.getChildren() != null ) {
+				ArrayList<TreeNode> list = node.getChildren();
+				for(int i = list.size() - 1; i >= 0; i-- )
+					q.add(list.get(i));
+			}
+			node = q.remove();
+		}
+		return res;
 	}
 
 	/**
@@ -62,14 +98,5 @@ public class TraversalTree implements Tree {
 	 * @return true if the tree is empty, false otherwise
 	 */
 	public boolean isEmpty() { return size == 0; }
-
-	public void add(Person data) {
-		// TODO Auto-generated method stub
-	}
-
-	public Person search(Person data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

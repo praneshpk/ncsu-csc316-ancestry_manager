@@ -21,7 +21,7 @@ public class AncestryTreeManager {
 	 * @param ahnentafelFilePath the path to the file that contains the ahnentafel
 	 */
 	public AncestryTreeManager(String ahnentafelFilePath) {
-	    DoubleList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
+	    ArrayList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
 	    if((tree = buildTree( unsorted )) == null ) {
     		System.out.println("Error: Ahnentafel file is invalid!");
     		System.exit(1);
@@ -36,30 +36,20 @@ public class AncestryTreeManager {
 	 * @param postOrderFilePath the path to the file that contains the postOrder traversal
 	 */
 	public AncestryTreeManager(String preOrderFilePath, String postOrderFilePath) {
-		DoubleList<TreeNode> preorder = parseFile(preOrderFilePath, false);
-		if( preorder == null ) {
+		ArrayList<TreeNode> preOrder = parseFile(preOrderFilePath, false);
+		if( preOrder == null ) {
 			System.out.println("Error: PreOrder file is invalid!");
 			System.exit(1);
 		}
-		DoubleList<TreeNode> postorder = parseFile(postOrderFilePath, false);
-		if( postorder == null ) {
+		ArrayList<TreeNode> postOrder = parseFile(postOrderFilePath, false);
+		if( postOrder == null ) {
 			System.out.println("Error: PostOrder file is invalid!");
 			System.exit(1);
 		}
 		
-		Iterator<TreeNode> pre = preorder.iterator();
-		Iterator<TreeNode> post = postorder.riterator();
-		/*Person root = pre.next();
-		if( !root.equals(post.next())) {
-			System.out.println("Error: Pre/PostOrder files are invalid!");
-			System.exit(1);
-		}*/
-		
-		TreeNode r = buildTree(pre.next(), preorder, pre, postorder, post);
-		
-		tree = new TraversalTree(r, preorder.size());
-		//...
-		
+		TreeNode r = buildTree(preOrder.get(0), preOrder, 0, preOrder.size() - 1, postOrder, 0, postOrder.size() - 1);
+		tree = new TraversalTree(r, preOrder.size());
+		System.out.println(getLevelOrder());
 	}
 	
 	/**
@@ -72,56 +62,59 @@ public class AncestryTreeManager {
 	 * @param postMax the max index to consider in the postOrder traversal
 	 * @return a reference to the root node of the tree
 	 */
-	public TreeNode buildTree(TreeNode root, DoubleList<TreeNode> preOrder, Iterator<TreeNode> pre,
-			DoubleList<TreeNode> postOrder, Iterator<TreeNode> post ) {
-		TreeNode left, right, newRoot;
-		DoubleList<TreeNode> newPre = new DoubleList<>();
-		DoubleList<TreeNode> newPost = new DoubleList<>();
-		DoubleList<TreeNode> children = new DoubleList<>();
-		Iterator<TreeNode> p = preOrder.riterator();
+	public TreeNode buildTree( TreeNode root, ArrayList<TreeNode> preOrder, int preMin, int preMax,
+			ArrayList<TreeNode> postOrder, int postMin, int postMax ) {
+		int split = -1;
+		ArrayList<TreeNode> children = new ArrayList<>();
 		
-		TreeNode e1 = null, e2 = null;
-		while(post.hasNext()) {
-			e2 = post.next();
-			if( root.getData().equals( e2.getData() ) ) {
-				TreeNode child = buildTree(pre.next(), preOrder, pre, postOrder, post);
-				child.setParent(root);
-				root.getChildren().add( child );
-				/*if( newPost.isEmpty() ) {
-					return new TreeNode(root.getData(), root.getParent(), children );
-				}*/
-				if( ! newPost.isEmpty() ) {
-					root.getParent().getChildren().add( buildTree(e1, newPre, newPre.iterator(),
-							newPost, newPost.riterator()) );
-				}
-
+		for(int i = postMax; i >= postMin; i-- ) {
+			TreeNode child = postOrder.get(i);
+			child.setParent(root);
+			children.addLast(child);
+			if( child.getData().equals(preOrder.get(preMin).getData()) ) {
+				split = i;
+				break;
 			}
-			newPre.addFront(e1 = p.next());
-			newPost.addFront(e2);
+
 		}
-		root.setChildren(newPre); 
-		return root;
+		if(split == postMin) {
+			root.setChildren(children);
+			return root;
+		}
+		TreeNode temp = buildTree( preOrder.get(preMin), preOrder, preMin + 1, preMax, postOrder, postMin, split - 1 );
+		if(temp != null)
+			temp.setParent(root);
+		if(split != postMax)
+			buildTree( root, preOrder, split + 2, preMax, postOrder, split + 1, postMax );
+		
+		if(root.getParent() == null)
+			if(temp != null )
+				root.getChildren().addLast(temp);
+			else
+				return root;	
+
+		return null;
+		
+		
 	}
 
 	/**
-	 * Builds an Ahnentafel tree from a DoubleList
+	 * Builds an Ahnentafel tree from a list
 	 * @param list a DoubleList containing TreeNodes
 	 * @return a Tree object
 	 */
-	public Tree buildTree(DoubleList<TreeNode> list) {
+	public Tree buildTree(ArrayList<TreeNode> list) {
 		Person[] sorted = new Person[list.size()];
-	    Iterator<TreeNode> it = list.iterator();
-	    while(it.hasNext()) {
-	    	Person p = it.next().getData();
+	    for(int i = 0; i < list.size(); i++ ) {
+	    	Person p = list.get(i).getData();
 	    	if(p.getId() > list.size() ||
-	    			sorted[p.getId()-1] != null ){
+	    			sorted[p.getId()-1] != null )
 				return null;
-	    	}
 	    	sorted[ p.getId()-1 ] = p;
 	    }
 	   
 	    AhnentafelTree t = new AhnentafelTree(sorted[0]);
-	    for(int i=1; i < sorted.length; i++ )
+	    for(int i = 1; i < sorted.length; i++ )
 	    	t.add(sorted[i]);
 	    return (Tree) t;
 	}
@@ -133,8 +126,8 @@ public class AncestryTreeManager {
 	 * false if it is a pre/postorder file
 	 * @return a DoubleList of people, or null if an error was encountered
 	 */
-	public DoubleList<TreeNode> parseFile( String path, boolean ahnentafel ) {
-		DoubleList<TreeNode> d = new DoubleList<>();
+	public ArrayList<TreeNode> parseFile( String path, boolean ahnentafel ) {
+		ArrayList<TreeNode> d = new ArrayList<>();
 		try( Scanner in = new Scanner( new FileInputStream( path ), "UTF8") )
 		{
 			while( in.hasNext() ) {
@@ -144,7 +137,7 @@ public class AncestryTreeManager {
 						int id = line.nextInt();
 						String fname = line.next();
 						String lname = line.next();
-						d.add(new TreeNode(new Person(fname, lname, id)));
+						d.addLast(new TreeNode(new Person(fname, lname, id)));
 					}
 					else {	
 						String fname = line.next();
@@ -157,7 +150,7 @@ public class AncestryTreeManager {
 							g = true;
 						else
 							throw new IllegalArgumentException();
-						d.add(new TreeNode(new Person(fname, lname, g)));
+						d.addLast(new TreeNode(new Person(fname, lname, g)));
 					}
 				} catch( Exception e ) {
 					return null;
@@ -177,14 +170,12 @@ public class AncestryTreeManager {
 	 * @return the level-order traversal for the tree
 	 */
 	public String getLevelOrder() {
-		DoubleList<Person> q = tree.getLevelOrder();
-		Iterator<Person> i = q.iterator();
-		
-		Person p = i.next();
+		ArrayList<Person> q = tree.getLevelOrder();
+		Person p = q.get(0);
 		String res = "LevelOrder[" + p.getLname() + ", " + p.getFname();
-		while(i.hasNext()) {
-			p = i.next();
-			res += "; "+p.getLname() +", "+p.getFname();
+		for(int i = 1; i < q.size(); i++ ) {
+			p = q.get(i);
+			res += "; " + p.getLname() + ", " + p.getFname();
 		}
 		res += "]";
 		return res;
@@ -204,8 +195,8 @@ public class AncestryTreeManager {
 		name = nameB.split("\\s+");
 		Person b = tree.search( new Person(name[0], name[1], 0) );
 		
-		System.out.println(a);
-		System.out.println(b);
+		System.out.println("a:"+a);
+		System.out.println("b:"+b);
 		return null;
 	}
 
@@ -218,12 +209,12 @@ public class AncestryTreeManager {
 	 */
 	public String getRelationship(String name) {
 		Person root = tree.getRoot().getData();
+		if( name.equals(root.getFname() + " " + root.getLname() ))
+			return name + " is " + name;
 		String res = name + " is " + root.getFname() + " " + root.getLname() + "'s ";
 		String[] full = name.split("\\s+");
 		Person a = tree.search( new Person(full[0], full[1], 0) );
 		int r = (int) Math.floor( Math.log(a.getId()) / Math.log(2) );
-		if(a == null || r == 0)
-			return null;
 		String str = "";
 		for(int i=r; i > 0; i-- ) {
 			if( i > 2 )

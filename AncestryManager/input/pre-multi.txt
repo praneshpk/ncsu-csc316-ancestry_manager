@@ -1,0 +1,12 @@
+H H F
+B B M
+G G M
+M M F
+W W M
+F F F
+T T F
+X X M
+Z Z F
+C C M
+R R M
+P P F

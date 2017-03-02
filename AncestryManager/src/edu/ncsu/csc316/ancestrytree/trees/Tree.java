@@ -5,12 +5,10 @@ package edu.ncsu.csc316.ancestrytree.trees;
  *
  */
 public interface Tree {
-	public Person search(Person data);
-	public TreeNode searchForMark(TreeNode r);
-	public DoubleList<Person> getLevelOrder();
+	public ArrayList<Person> getLevelOrder();
 	public TreeNode getRoot();
 	public TreeNode get(int index);
 	public int getSize();
 	public boolean isEmpty();
-	public void add(Person data);
+	public Person search(Person person);
 }
