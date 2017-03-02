@@ -62,7 +62,7 @@ public class AncestryTreeManager {
 	 */
 	public TreeNode buildTree( TreeNode root, ArrayList<TreeNode> preOrder, int preMin, int preMax,
 			ArrayList<TreeNode> postOrder, int postMin, int postMax ) {
-		int split = 0;
+		int split = -1;
 		ArrayList<TreeNode> children = new ArrayList<>();
 		for(int i = postMax; i >= postMin; i-- ) {
 			TreeNode child = postOrder.get(i);
@@ -73,6 +73,8 @@ public class AncestryTreeManager {
 				break;
 			}
 		}
+		if(split == -1)
+			return root;
 		if(split == postMin) {
 			root.setChildren(children);
 			return root;
