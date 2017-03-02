@@ -10,3 +10,6 @@ R R M
 P P F
 C C M
 H H F
+N N F
+Q Q M
+D D M

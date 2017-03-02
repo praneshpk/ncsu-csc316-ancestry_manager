@@ -130,13 +130,7 @@ public class AhnentafelTree implements Tree {
 	 * @param data search data
 	 * @return data if found, null otherwise
 	 */
-	public Person search(Person data) {
-		TreeNode res;
-		if( (res = search(root, data)) != null )
-			return res.getData();
-		else
-			return null;
-	}
+	public TreeNode search(Person data) { return search(root, data); }
 
 	/**
 	 * Searches for the given data in tree and returns

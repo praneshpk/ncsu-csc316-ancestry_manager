@@ -64,6 +64,8 @@ public class AncestryTreeManager {
 	 */
 	public TreeNode buildTree( TreeNode root, ArrayList<TreeNode> preOrder, int preMin, int preMax,
 			ArrayList<TreeNode> postOrder, int postMin, int postMax ) {
+		if(preMin >= preMax || postMin > postMax )
+			System.out.println(root.getData()+ "\n"+preMin+ " "+preMax+" "+postMin+" "+ postMax+"\n");
 		int split = -1;
 		ArrayList<TreeNode> children = new ArrayList<>();
 		
@@ -75,9 +77,9 @@ public class AncestryTreeManager {
 				split = i;
 				break;
 			}
-
 		}
 		if(split == postMin) {
+			System.out.println(root.getData());
 			root.setChildren(children);
 			return root;
 		}
@@ -88,8 +90,9 @@ public class AncestryTreeManager {
 			buildTree( root, preOrder, split + 2, preMax, postOrder, split + 1, postMax );
 		
 		if(root.getParent() == null)
-			if(temp != null )
+			if(temp != null ) {
 				root.getChildren().addLast(temp);
+			}
 			else
 				return root;	
 
@@ -191,12 +194,19 @@ public class AncestryTreeManager {
 	 */
 	public String getRelationship(String nameA, String nameB) {
 		String[] name = nameA.split("\\s+");
-		Person a = tree.search( new Person(name[0], name[1], 0) );
+		TreeNode a, b;
+		if((a = tree.search(new Person(name[0], name[1], 0))) == null )
+			return null;
 		name = nameB.split("\\s+");
-		Person b = tree.search( new Person(name[0], name[1], 0) );
+		if((b = tree.search(new Person(name[0], name[1], 0) )) == null )
+			return null;
+		a.markAncestors(a);
+		b.markAncestors(b);
+			
+		System.out.println(a);
+		System.out.println(b);
+
 		
-		System.out.println("a:"+a);
-		System.out.println("b:"+b);
 		return null;
 	}
 
@@ -213,7 +223,7 @@ public class AncestryTreeManager {
 			return name + " is " + name;
 		String res = name + " is " + root.getFname() + " " + root.getLname() + "'s ";
 		String[] full = name.split("\\s+");
-		Person a = tree.search( new Person(full[0], full[1], 0) );
+		Person a = tree.search( new Person(full[0], full[1], 0) ).getData();
 		int r = (int) Math.floor( Math.log(a.getId()) / Math.log(2) );
 		String str = "";
 		for(int i=r; i > 0; i-- ) {

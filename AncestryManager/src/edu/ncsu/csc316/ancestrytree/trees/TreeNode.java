@@ -61,6 +61,15 @@ public class TreeNode {
 	 */
 	public boolean isMarked() { return marked; }
 	
+	public TreeNode markAncestors( TreeNode root ) {
+		root.mark();
+		ArrayList<TreeNode> children = root.getChildren();
+		if( children != null)
+			for(int i = 0; i < children.size(); i++ )
+				markAncestors(children.get(i));
+		return null;
+	}
+	
 	/**
 	 * Returns the data contained in node
 	 * @return data
@@ -127,7 +136,7 @@ public class TreeNode {
 			sparent = "none";
 		else
 			sparent = parent.getData().toString();
-		return "{ " + data.toString() + "; parent: " + sparent + "; children: " + children + " }";
+		return "{ " + data.toString() + "; marked: " + marked + "; parent: " + sparent + "; children: " + children + " }";
 	}
 	
 }

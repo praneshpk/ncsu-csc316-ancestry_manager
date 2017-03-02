@@ -30,13 +30,7 @@ public class TraversalTree implements Tree {
 	 * @param data search data
 	 * @return data if found, null otherwise
 	 */
-	public Person search(Person data) {
-		TreeNode res;
-		if( (res = search(root, data)) != null )
-			return res.getData();
-		else
-			return null;
-	}
+	public TreeNode search(Person data) { return search(root, data); }
 	
 	/**
 	 * Searches for the given data in tree and returns
@@ -45,7 +39,7 @@ public class TraversalTree implements Tree {
 	 * @param data search data
 	 * @return returns the node if found, null otherwise
 	 */
-	private TreeNode search(TreeNode r, Person data) {
+	public TreeNode search(TreeNode r, Person data) {
 		TreeNode res;
 		if(r.getData().equals(data))
 			return r;

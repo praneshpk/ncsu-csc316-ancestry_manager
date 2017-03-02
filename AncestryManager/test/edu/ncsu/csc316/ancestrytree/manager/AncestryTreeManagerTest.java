@@ -8,9 +8,9 @@ public class AncestryTreeManagerTest {
 
 	@Test
 	public void testAncestryTreeManagerStringString() {
-		AncestryTreeManager p = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
+		AncestryTreeManager a = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
 		AncestryTreeManager b = new AncestryTreeManager("input/pre-multi.txt", "input/post-multi.txt");
-		System.out.println(b.getRelationship("B B","T T"));
+		System.out.println(a.getRelationship("B B","T T"));
 	}
 
 	@Test
