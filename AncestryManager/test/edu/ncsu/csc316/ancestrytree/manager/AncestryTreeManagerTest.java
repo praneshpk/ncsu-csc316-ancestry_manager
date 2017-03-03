@@ -52,6 +52,7 @@ public class AncestryTreeManagerTest {
 								+ "{ M M F; marked: false; parent: B B M; children: [ ] } "
 								+ "{ G G M; marked: false; parent: B B M; children: [ ] } ] } ] } ] }");
 		assertEquals(a.getRelationship("Zachary Doe", "Henry Leonard"), "Zachary Doe is Henry Leonard's grandson");
+		assertEquals(a.getRelationship("Zachary Doe", "Zachary Doe"), "Zachary Doe is Zachary Doe");
 		assertEquals(b.getRelationship("D D", "H H"), "D D is H H's father");
 		assertEquals(b.getRelationship("H H", "D D"), "H H is D D's daughter");
 		assertEquals(b.getRelationship("W W", "T T"), "W W is T T's nephew");
@@ -62,6 +63,8 @@ public class AncestryTreeManagerTest {
 		assertEquals(b.getRelationship("T T", "Q Q"), "T T is Q Q's niece");
 		assertEquals(b.getRelationship("H H", "Q Q"), "H H is Q Q's sister");
 		assertEquals(b.getRelationship("Q Q", "H H"), "Q Q is H H's brother");
+		assertEquals(b.getRelationship("H", "H H"), null);
+		assertEquals(b.getRelationship("H H", "H"), null);
 		AncestryTreeManager c = null;
 		try {
 			c = new AncestryTreeManager("input/pre-single.txt", "input/post-single.txt");
