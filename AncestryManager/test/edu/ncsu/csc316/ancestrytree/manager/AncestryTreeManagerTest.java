@@ -18,7 +18,7 @@ public class AncestryTreeManagerTest {
 	 * Tests creation of the TraversalTree object and all its relevant functions
 	 */
 	@Test
-	public void testTraversalTree() {
+	public void testTraversalTree() throws FileNotFoundException{
 		AncestryTreeManager a = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
 		assertEquals(a.toString(), "{ Henry Leonard M; marked: false; parent: none; children: [ "
 								+ "{ Claire Murray F; marked: false; parent: Henry Leonard M; children: [ "
