@@ -1,6 +1,7 @@
 package edu.ncsu.csc316.ancestrytree.manager;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import edu.ncsu.csc316.ancestrytree.trees.*;
@@ -18,13 +19,16 @@ public class AncestryTreeManager {
 	/**
 	 * Constructor to initialize an instance of your AncestryTreeManager object
 	 * @param ahnentafelFilePath the path to the file that contains the ahnentafel
+	 * @throws FileNotFoundException 
 	 */
-	public AncestryTreeManager(String ahnentafelFilePath) {
+	public AncestryTreeManager(String ahnentafelFilePath) throws FileNotFoundException {
 	    ArrayList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
+	    if(unsorted == null)
+	    	System.exit(1);
 	    tree = buildTree( unsorted );
 	    if(tree == null ) {
 	    	System.out.println("Error: Invalid file!");
-    		return;
+    		throw new FileNotFoundException();
 	    }
 	    System.out.println(getLevelOrder());	    
 	    
@@ -38,13 +42,13 @@ public class AncestryTreeManager {
 	public AncestryTreeManager(String preOrderFilePath, String postOrderFilePath) {
 		ArrayList<TreeNode> preOrder = parseFile(preOrderFilePath, false);
 		if( preOrder == null )
-			return;
+			System.exit(1);
 		ArrayList<TreeNode> postOrder = parseFile(postOrderFilePath, false);
 		if( postOrder == null )
-			return;
+			System.exit(1);
 		TreeNode r = buildTree(preOrder.get(0), preOrder, 0, preOrder.size() - 1, postOrder, 0, postOrder.size() - 1);
 		if( r == null )
-			return;
+			System.exit(1);
 		tree = new TraversalTree(r);
 		System.out.println(getLevelOrder());
 	}
@@ -123,7 +127,7 @@ public class AncestryTreeManager {
 	}
 
 	/**
-	 * Parses the file and returns a DoubleList of People
+	 * Parses the file and returns a ArrayList of People
 	 * @param path the file path
 	 * @param ahnentafel true if it is an ahnentafel file,
 	 * false if it is a pre/postorder file
@@ -133,6 +137,10 @@ public class AncestryTreeManager {
 		ArrayList<TreeNode> d = new ArrayList<>();
 		try( Scanner in = new Scanner( new FileInputStream( path ), "UTF8") )
 		{
+			if(! in.hasNext()) {
+				System.out.println("Error: File is empty!");
+				return null;
+			}
 			while( in.hasNext() ) {
 				try( Scanner line = new Scanner(in.nextLine());)
 				{
@@ -195,10 +203,18 @@ public class AncestryTreeManager {
 	 */
 	public String getRelationship(String nameA, String nameB) {
 		String[] name = nameA.split("\\s+");
+		if(name.length < 2) {
+			System.out.println("Error: Need to enter full names!");
+			return null;
+		}
 		TreeNode a = tree.search(new Person(name[0], name[1], 0));
 		if(a == null )
 			return null;
 		name = nameB.split("\\s+");
+		if(name.length < 2) {
+			System.out.println("Error: Need to enter full names!");
+			return null;
+		}
 		TreeNode b = tree.search(new Person(name[0], name[1], 0) );
 		if(b == null )
 			return null;
@@ -329,7 +345,15 @@ public class AncestryTreeManager {
 			return name + " is " + name;
 		String res = name + " is " + root.getFname() + " " + root.getLname() + "'s ";
 		String[] full = name.split("\\s+");
+		if(full.length < 2) {
+			System.out.println("Error: Need to enter full names!");
+			return null;
+		}
 		Person a = tree.search( new Person(full[0], full[1], 0) ).getData();
+		if(a == null) {
+			System.out.println("Error: Person is not in the tree!");
+			return null;
+		}
 		int r = (int) Math.floor( Math.log(a.getId()) / Math.log(2) );
 		String str = "";
 		for(int i = r; i > 0; i-- ) {
