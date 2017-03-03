@@ -1,7 +1,6 @@
 package edu.ncsu.csc316.ancestrytree.manager;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import edu.ncsu.csc316.ancestrytree.trees.*;
@@ -21,14 +20,14 @@ public class AncestryTreeManager {
 	 * @param ahnentafelFilePath the path to the file that contains the ahnentafel
 	 * @throws FileNotFoundException 
 	 */
-	public AncestryTreeManager(String ahnentafelFilePath) throws FileNotFoundException {
+	public AncestryTreeManager(String ahnentafelFilePath) {
 	    ArrayList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
 	    if(unsorted == null)
 	    	System.exit(1);
 	    tree = buildTree( unsorted );
 	    if(tree == null ) {
 	    	System.out.println("Error: Invalid file!");
-    		throw new FileNotFoundException();
+    		throw new IllegalArgumentException();
 	    }
 	    System.out.println(getLevelOrder());	    
 	    

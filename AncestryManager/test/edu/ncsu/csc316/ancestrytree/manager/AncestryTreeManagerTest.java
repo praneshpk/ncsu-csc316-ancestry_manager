@@ -2,8 +2,6 @@ package edu.ncsu.csc316.ancestrytree.manager;
 
 import static org.junit.Assert.*;
 
-import java.io.FileNotFoundException;
-
 import org.junit.Test;
 
 /**
@@ -85,7 +83,7 @@ public class AncestryTreeManagerTest {
 		AncestryTreeManager a = null;
 		try {
 			a = new AncestryTreeManager("input/small-ahnentafel.txt");
-		} catch(FileNotFoundException e) {
+		} catch(Exception e) {
 			fail("Error: Test file deleted!");
 		}
 		assertEquals(a.getRelationship("Sally Poole"), "Sally Poole is Billy Smith's great-grandmother");
@@ -93,7 +91,7 @@ public class AncestryTreeManagerTest {
 		try {
 			a = new AncestryTreeManager("input/invalid2.txt");
 			fail("Error: Should throw an exception!");
-		} catch(FileNotFoundException e) {
+		} catch(Exception e) {
 			System.out.println("Exception thrown PASS");
 		}
 	}
