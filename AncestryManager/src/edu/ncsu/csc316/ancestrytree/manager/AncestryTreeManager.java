@@ -18,7 +18,6 @@ public class AncestryTreeManager {
 	/**
 	 * Constructor to initialize an instance of your AncestryTreeManager object
 	 * @param ahnentafelFilePath the path to the file that contains the ahnentafel
-	 * @throws FileNotFoundException 
 	 */
 	public AncestryTreeManager(String ahnentafelFilePath) {
 	    ArrayList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
@@ -41,13 +40,13 @@ public class AncestryTreeManager {
 	public AncestryTreeManager(String preOrderFilePath, String postOrderFilePath) {
 		ArrayList<TreeNode> preOrder = parseFile(preOrderFilePath, false);
 		if( preOrder == null )
-			return;
+			throw new IllegalArgumentException();
 		ArrayList<TreeNode> postOrder = parseFile(postOrderFilePath, false);
 		if( postOrder == null )
-			return;
+			throw new IllegalArgumentException();
 		TreeNode r = buildTree(preOrder.get(0), preOrder, 0, preOrder.size() - 1, postOrder, 0, postOrder.size() - 1);
 		if( r == null )
-			return;
+			throw new IllegalArgumentException();
 		tree = new TraversalTree(r);
 		System.out.println(getLevelOrder());
 	}
@@ -136,7 +135,7 @@ public class AncestryTreeManager {
 		ArrayList<TreeNode> d = new ArrayList<>();
 		try( Scanner in = new Scanner( new FileInputStream( path ), "UTF8") )
 		{
-			if(! in.hasNext()) {
+			if(!in.hasNext()) {
 				System.out.println("Error: File is empty!");
 				return null;
 			}

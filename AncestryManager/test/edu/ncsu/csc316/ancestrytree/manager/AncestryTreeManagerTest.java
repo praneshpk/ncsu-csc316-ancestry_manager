@@ -69,10 +69,31 @@ public class AncestryTreeManagerTest {
 			fail("Error: Test file deleted!");
 		}
 		assertEquals(c.getLevelOrder(), "LevelOrder[Guy, Single]");
-		
-		new AncestryTreeManager("input/nonexistent.txt", "input/small-postorder.txt");
-		new AncestryTreeManager("input/small-preorder.txt", "input/nonexistent.txt");
-		new AncestryTreeManager("input/invalid.txt", "input/small-postorder.txt");
+		try {
+			new AncestryTreeManager("input/nonexistent.txt", "input/small-postorder.txt");
+		} catch(Exception e) {
+			// This is OK
+		}
+		try {
+			new AncestryTreeManager("input/small-preorder.txt", "input/nonexistent.txt");
+		} catch(Exception e) {
+			// This is OK
+		}
+		try {
+			new AncestryTreeManager("input/invalid.txt", "input/small-postorder.txt");
+		} catch(Exception e) {
+			// This is OK
+		}
+		try {
+			new AncestryTreeManager("input/empty.txt");
+		} catch(Exception e) {
+			// This is OK
+		}
+		try {
+			new AncestryTreeManager("input/travPosRootErr.txt", "input/travPreRootErr.txt");
+		} catch(Exception e) {
+			// This is OK
+		}
 	}
 
 	/**
