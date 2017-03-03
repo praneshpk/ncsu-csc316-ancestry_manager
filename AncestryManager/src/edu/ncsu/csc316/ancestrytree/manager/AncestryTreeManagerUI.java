@@ -11,7 +11,6 @@ public class AncestryTreeManagerUI {
 	/**
 	 * Starts the program
 	 * @param args command line arguments
-	 * @throws FileNotFoundException 
 	 */
 	public static void main(String[] args) {
 		AncestryTreeManager a = null;
