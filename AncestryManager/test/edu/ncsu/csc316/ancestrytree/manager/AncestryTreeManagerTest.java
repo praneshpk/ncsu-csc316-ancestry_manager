@@ -18,8 +18,13 @@ public class AncestryTreeManagerTest {
 	 * Tests creation of the TraversalTree object and all its relevant functions
 	 */
 	@Test
-	public void testTraversalTree() throws FileNotFoundException{
-		AncestryTreeManager a = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
+	public void testTraversalTree() {
+		AncestryTreeManager a = null;
+		try {
+			a = new AncestryTreeManager("input/small-preorder.txt", "input/small-postorder.txt");
+		} catch(Exception e) {
+			fail("Error: Test file deleted!");
+		}
 		assertEquals(a.toString(), "{ Henry Leonard M; marked: false; parent: none; children: [ "
 								+ "{ Claire Murray F; marked: false; parent: Henry Leonard M; children: [ "
 								+ "{ Percy Perry M; marked: false; parent: Claire Murray F; children: [ ] } "
@@ -27,7 +32,12 @@ public class AncestryTreeManagerTest {
 								+ "{ Teresa Smith F; marked: false; parent: Henry Leonard M; children: [ "
 								+ "{ Zachary Doe M; marked: false; parent: Teresa Smith F; children: [ ] } "
 								+ "{ Xena Jones F; marked: false; parent: Teresa Smith F; children: [ ] } ] } ] }");
-		AncestryTreeManager b = new AncestryTreeManager("input/pre-multi.txt", "input/post-multi.txt");
+		AncestryTreeManager b = null;
+		try {
+			b = new AncestryTreeManager("input/pre-multi.txt", "input/post-multi.txt");
+		} catch(Exception e) {
+			fail("Error: Test file deleted!");
+		}
 		assertEquals(b.toString(), "{ D D M; marked: false; parent: none; children: [ "
 								+ "{ Q Q M; marked: false; parent: D D M; children: [ "
 								+ "{ N N F; marked: false; parent: Q Q M; children: [ ] } ] } "
@@ -54,8 +64,12 @@ public class AncestryTreeManagerTest {
 		assertEquals(b.getRelationship("T T", "Q Q"), "T T is Q Q's niece");
 		assertEquals(b.getRelationship("H H", "Q Q"), "H H is Q Q's sister");
 		assertEquals(b.getRelationship("Q Q", "H H"), "Q Q is H H's brother");
-		
-		AncestryTreeManager c = new AncestryTreeManager("input/pre-single.txt", "input/post-single.txt");
+		AncestryTreeManager c = null;
+		try {
+			c = new AncestryTreeManager("input/pre-single.txt", "input/post-single.txt");
+		} catch(Exception e) {
+			fail("Error: Test file deleted!");
+		}
 		assertEquals(c.getLevelOrder(), "LevelOrder[Guy, Single]");
 		
 		new AncestryTreeManager("input/nonexistent.txt", "input/small-postorder.txt");
