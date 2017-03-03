@@ -22,7 +22,7 @@ public class AncestryTreeManager {
 	public AncestryTreeManager(String ahnentafelFilePath) {
 	    ArrayList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
 	    if(unsorted == null)
-	    	return;
+	    	throw new IllegalArgumentException();
 	    tree = buildTree( unsorted );
 	    if(tree == null ) {
 	    	System.out.println("Error: Invalid file!");

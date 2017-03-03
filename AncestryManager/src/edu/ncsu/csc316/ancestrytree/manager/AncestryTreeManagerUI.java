@@ -1,6 +1,5 @@
 package edu.ncsu.csc316.ancestrytree.manager;
 
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -14,14 +13,18 @@ public class AncestryTreeManagerUI {
 	 * @param args command line arguments
 	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) throws FileNotFoundException {
-		AncestryTreeManager a;
+	public static void main(String[] args) {
+		AncestryTreeManager a = null;
 		// Asks for user input
 		Scanner in = new Scanner(System.in);
 		System.out.println("Ahnentafel (1) or PreOrder/PostOrder (2)? ");
 		if(in.nextLine().equals("1")) {
 			System.out.print("Enter your Ahnentafel filename: ");
-			a = new AncestryTreeManager("input/" + in.nextLine());
+			try {
+				a = new AncestryTreeManager("input/" + in.nextLine());
+			} catch( Exception e) {
+				System.exit(1);
+			}
 			System.out.print("Enter a name to find the relationship to: ");
 			String output = a.getRelationship(in.nextLine());
 			if(output == null)
@@ -36,8 +39,11 @@ public class AncestryTreeManagerUI {
 				System.out.println("Error: Need to enter two files!");
 				System.exit(1);
 			}
-			a = new AncestryTreeManager("input/" + ainput[0], "input/" + ainput[1]);
-			
+			try {
+				a = new AncestryTreeManager("input/" + ainput[0], "input/" + ainput[1]);
+			} catch( Exception e) {
+				System.exit(1);
+			}
 			System.out.print("Enter two names separated by the return key: ");
 			String output = a.getRelationship(in.nextLine(), in.nextLine());
 			if(output == null)
