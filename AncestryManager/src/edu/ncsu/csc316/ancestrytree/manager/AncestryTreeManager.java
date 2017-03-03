@@ -23,7 +23,7 @@ public class AncestryTreeManager {
 	public AncestryTreeManager(String ahnentafelFilePath) {
 	    ArrayList<TreeNode> unsorted = parseFile(ahnentafelFilePath, true);
 	    if(unsorted == null)
-	    	System.exit(1);
+	    	return;
 	    tree = buildTree( unsorted );
 	    if(tree == null ) {
 	    	System.out.println("Error: Invalid file!");
@@ -41,13 +41,13 @@ public class AncestryTreeManager {
 	public AncestryTreeManager(String preOrderFilePath, String postOrderFilePath) {
 		ArrayList<TreeNode> preOrder = parseFile(preOrderFilePath, false);
 		if( preOrder == null )
-			System.exit(1);
+			return;
 		ArrayList<TreeNode> postOrder = parseFile(postOrderFilePath, false);
 		if( postOrder == null )
-			System.exit(1);
+			return;
 		TreeNode r = buildTree(preOrder.get(0), preOrder, 0, preOrder.size() - 1, postOrder, 0, postOrder.size() - 1);
 		if( r == null )
-			System.exit(1);
+			return;
 		tree = new TraversalTree(r);
 		System.out.println(getLevelOrder());
 	}
